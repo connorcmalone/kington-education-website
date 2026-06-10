@@ -658,6 +658,11 @@ section { position: relative; }
   background: var(--green-900); border-radius: var(--r-lg); box-shadow: var(--sh-lg);
   display: grid; place-items: center; color: rgba(255,255,255,.8);
   font-family: var(--mono); font-size: .9rem;
+  position: relative; overflow: hidden;
+}
+.lightbox .frame iframe {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  border: none; border-radius: var(--r-lg);
 }
 .lightbox .close {
   position: absolute; top: 22px; right: 26px;
@@ -688,7 +693,7 @@ section { position: relative; }
 
 <!-- Mobile sticky demo bar (appears after scrolling past hero) -->
 <div class="demo-bar" id="demoBar">
-  <span>Watch the demo video — free</span>
+  <span>Watch the demo video, free</span>
   <a href="#demo" class="btn btn-primary btn-sm">Get it now <span class="arr">→</span></a>
 </div>
 
@@ -746,13 +751,13 @@ section { position: relative; }
       <div class="hero-pitch">
         <div class="ribbon reveal" style="margin-bottom:26px;">
           <span class="km">K</span><span class="x">×</span>
-          <span class="ph ph-inline" data-label="Maths-Whizz" style="min-height:26px;"></span>
+          <img src="maths-whizz-logo.jpeg" alt="Maths-Whizz" style="height:26px;width:auto;object-fit:contain;mix-blend-mode:multiply;border-radius:4px;">
           <span class="tag">Official UK partner</span>
         </div>
         <p class="eyebrow reveal" style="margin-bottom:18px;">We've partnered with Maths-Whizz</p>
         <h1 class="reveal d1">Bringing the very best of EdTech to schools &amp; colleges across the&nbsp;UK</h1>
         <p class="lede reveal d2" style="margin-top:22px;max-width:50ch;">
-          Kington Education is the UK partner bringing <strong>Maths-Whizz</strong> — the AI learning platform by Whizz Education — to schools and MATs.
+          Kington Education is the official UK partner for <strong>Maths-Whizz</strong>, the AI learning platform by Whizz Education, bringing it to schools and MATs across the country.
         </p>
         <div class="trust-row reveal d3">
           <span class="trust-item">
@@ -776,11 +781,11 @@ section { position: relative; }
 
         <!-- Explainer video -->
         <div class="reveal d4" style="margin-top:32px;">
-          <p style="font-family:var(--display);font-weight:700;font-size:.86rem;letter-spacing:.04em;text-transform:uppercase;color:var(--green-700);margin-bottom:12px;">See it in 2 minutes</p>
-          <div class="ph video" data-video="What is Maths-Whizz and how can it help your school?" data-label="explainer video — what is Maths-Whizz?" style="aspect-ratio:16/9;border-radius:var(--r-lg);box-shadow:var(--sh);max-width:480px;">
+          <p style="font-family:var(--display);font-weight:700;font-size:.86rem;letter-spacing:.04em;text-transform:uppercase;color:var(--green-700);margin-bottom:12px;">See it in 3 minutes</p>
+          <div class="ph video" data-video="See how the Virtual Tutor works" data-video-src="https://www.youtube.com/watch?v=Cd947JpVfes" data-label="" style="aspect-ratio:16/9;border-radius:var(--r-lg);box-shadow:var(--sh);max-width:480px;background:url(https://img.youtube.com/vi/Cd947JpVfes/maxresdefault.jpg) center/cover no-repeat;border:none;">
             <span class="play-tri"></span>
           </div>
-          <p style="margin-top:12px;font-size:.88rem;color:var(--muted);max-width:38ch;">A quick overview of how Maths-Whizz works and the difference it makes — no sign-up needed.</p>
+          <p style="margin-top:12px;font-size:.88rem;color:var(--muted);max-width:38ch;">A quick overview of how Maths-Whizz works and the difference it makes. No sign-up needed.</p>
         </div>
 
       </div>
@@ -791,7 +796,7 @@ section { position: relative; }
           <form data-demo-form novalidate>
             <div class="form-badge">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              Watch the full demo — free, no jargon
+              Watch the full demo. Free, no jargon.
             </div>
             <h3 style="font-size:1.55rem;margin-bottom:6px;">Get your personalised demo video</h3>
             <p class="muted" style="margin-bottom:22px;font-size:.95rem;">Tell us a little about your school and we'll send the full Maths-Whizz walkthrough straight to your inbox.</p>
@@ -869,7 +874,7 @@ section { position: relative; }
           <div class="form-success">
             <div class="badge">✓</div>
             <h3 style="font-size:1.5rem;">On its way, <span data-name="">there</span>!</h3>
-            <p class="muted" style="margin:10px auto 22px;max-width:36ch;">Check your inbox — your personalised Maths-Whizz walkthrough is landing now.</p>
+            <p class="muted" style="margin:10px auto 22px;max-width:36ch;">Check your inbox. Your personalised Maths-Whizz walkthrough is landing now.</p>
             <a href="contact.html#book" class="btn btn-secondary">Prefer a live call? Book 15 min <span class="arr">→</span></a>
           </div>
           <div class="form-or">or</div>
@@ -881,18 +886,6 @@ section { position: relative; }
   </div>
 </section>
 
-<!-- ===== TRUST STRIP ===== -->
-<section class="section-tight" style="background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
-  <div class="wrap">
-    <p class="center muted reveal" style="font-family:var(--display);font-weight:700;letter-spacing:.04em;margin-bottom:30px;">Trusted by schools and MATs across the UK</p>
-    <div class="grid g-4 reveal d1">
-      <div class="ph logo-ph" data-label="school / MAT logo"></div>
-      <div class="ph logo-ph" data-label="school / MAT logo"></div>
-      <div class="ph logo-ph" data-label="school / MAT logo"></div>
-      <div class="ph logo-ph" data-label="school / MAT logo"></div>
-    </div>
-  </div>
-</section>
 
 <!-- ===== THE EVIDENCE ===== -->
 <section class="section">
@@ -907,7 +900,7 @@ section { position: relative; }
         <p class="reveal d2" style="font-family:var(--display);font-weight:700;font-size:1.1rem;color:var(--ink-soft);">Maths Age growth in the first year</p>
         <p class="reveal d2 muted" style="margin-top:6px;">From just 45–60 minutes of Maths-Whizz a week.</p>
         <h2 class="reveal d3" style="margin-top:40px;">Why schools choose Maths-Whizz</h2>
-        <p class="reveal d3 lede" style="margin-top:14px;max-width:42ch;">The platform we've partnered to deliver — and support — across the UK.</p>
+        <p class="reveal d3 lede" style="margin-top:14px;max-width:42ch;">The platform we've partnered to deliver and support across the UK.</p>
       </div>
       <div class="research reveal d2">
         <span class="locktag">🔒 Verbatim · independently verified</span>
@@ -926,7 +919,7 @@ section { position: relative; }
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 7-7"/><path d="M14 8h6v6"/></svg>
         </div>
         <h3>Accelerated learning</h3>
-        <p>Pupils make measurable, rapid gains — backed by independent evidence.</p>
+        <p>Pupils make measurable, rapid gains, backed by independent evidence.</p>
       </div>
       <div class="card hover reveal d1">
         <div class="ico" aria-hidden="true">
@@ -951,7 +944,7 @@ section { position: relative; }
   <div class="wrap">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;" class="hero-grid">
       <div class="reveal" style="position:relative;">
-        <div class="ph" data-label="Teachers' Resource — lesson library UI" style="aspect-ratio:4/3;box-shadow:var(--sh);"></div>
+        <img src="teachers-resource.png" alt="Maths-Whizz Teachers' Resource — worksheets, activities, enrichment sheets, classroom resources and lessons" style="width:100%;border-radius:var(--r-lg);box-shadow:var(--sh);display:block;">
       </div>
       <div>
         <p class="eyebrow reveal">For teachers</p>
@@ -980,7 +973,7 @@ section { position: relative; }
       <div class="card reveal">
         <div class="step-num" style="margin-bottom:18px;">1</div>
         <h3>Watch the demo video</h3>
-        <p>Fill in the form above and we'll send a personalised Maths-Whizz walkthrough straight to your inbox — takes 60 seconds.</p>
+        <p>Fill in the form above and we'll send a personalised Maths-Whizz walkthrough straight to your inbox. Takes 60 seconds.</p>
       </div>
       <div class="card reveal d1">
         <div class="step-num" style="margin-bottom:18px;">2</div>
@@ -1055,14 +1048,14 @@ section { position: relative; }
       <div>
         <p class="eyebrow reveal" style="margin-bottom:16px;">Services · Maths-Whizz</p>
         <h1 class="reveal d1">Maths-Whizz, the world's leading Virtual&nbsp;Tutor for maths</h1>
-        <p class="lede reveal d2" style="margin-top:24px;max-width:54ch;">Brought to UK schools by Kington Education. A Virtual Tutor is an AI-driven adaptive learning service that simulates the behaviour of a human tutor — built on robust pedagogy and delivered through interactive, animated lessons.</p>
+        <p class="lede reveal d2" style="margin-top:24px;max-width:54ch;">Brought to UK schools by Kington Education. A Virtual Tutor is an AI-driven adaptive learning service that simulates the behaviour of a human tutor, built on robust pedagogy and delivered through interactive, animated lessons.</p>
         <div class="reveal d3" style="display:flex;gap:14px;flex-wrap:wrap;margin-top:32px;">
           <a href="contact.html#demo" class="btn btn-primary">Get the demo video <span class="arr">→</span></a>
           <a href="contact.html#book" class="btn btn-secondary">Book a call</a>
         </div>
       </div>
       <div class="reveal d2">
-        <div class="ph" data-label="Virtual Tutor — product hero" style="aspect-ratio:4/3;box-shadow:var(--sh-lg);"></div>
+        <img src="ipad-whizz.png" alt="Maths-Whizz Virtual Tutor on iPad" style="width:100%;border-radius:var(--r-lg);box-shadow:var(--sh-lg);display:block;">
       </div>
     </div>
   </div>
@@ -1087,7 +1080,7 @@ section { position: relative; }
   <div class="wrap">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;" class="hero-grid">
       <div class="reveal">
-        <div class="ph video" data-video="See how the Virtual Tutor works" data-label="video — 'See how the Virtual Tutor works'" style="aspect-ratio:16/10;box-shadow:var(--sh);">
+        <div class="ph video" data-video="See how the Virtual Tutor works" data-video-src="https://www.youtube.com/watch?v=iZ-T3WgbMqo" data-label="" style="aspect-ratio:16/10;box-shadow:var(--sh);background:url(https://img.youtube.com/vi/iZ-T3WgbMqo/maxresdefault.jpg) center/cover no-repeat;border:none;">
           <span class="play-tri"></span>
         </div>
       </div>
@@ -1105,7 +1098,7 @@ section { position: relative; }
           </div>
           <div class="reveal d3" style="display:flex;gap:16px;align-items:flex-start;">
             <div class="step-num">3</div>
-            <p style="color:var(--ink-soft);">It supports students one-to-one — providing confidence-boosting prompts and even taking them back to foundational material if they struggle.</p>
+            <p style="color:var(--ink-soft);">It supports students one-to-one, providing confidence-boosting prompts and even taking them back to foundational material if they struggle.</p>
           </div>
           <div class="reveal d4" style="display:flex;gap:16px;align-items:flex-start;">
             <div class="step-num">4</div>
@@ -1126,7 +1119,7 @@ section { position: relative; }
         <p class="reveal d2 lede" style="margin-top:18px;max-width:48ch;">The challenge for any teacher is to consistently give extra attention to every student within the school day. Maths-Whizz supports teachers by providing regular differentiated instruction to each student, identifying and filling learning gaps and preparing every student for success in the classroom.</p>
       </div>
       <div class="reveal d1">
-        <div class="ph" data-label="teacher + class — differentiated support" style="aspect-ratio:4/3;box-shadow:var(--sh);"></div>
+        <img src="teacher-class.png" alt="Teacher providing differentiated support in the classroom" style="width:100%;border-radius:var(--r-lg);box-shadow:var(--sh);display:block;">
       </div>
     </div>
   </div>
@@ -1134,15 +1127,25 @@ section { position: relative; }
 
 <section class="section" style="background:var(--green-50);border-top:1px solid var(--green-100);border-bottom:1px solid var(--green-100);">
   <div class="wrap">
-    <div class="center" style="max-width:680px;margin:0 auto 44px;">
-      <p class="eyebrow center reveal" style="justify-content:center;">Teachers' Resource</p>
-      <h2 class="reveal d1" style="margin-top:14px;">An all-in-one library, aligned to White Rose</h2>
-      <p class="reveal d2 lede" style="margin-top:16px;">Interactive lessons, classroom activities, enrichment sheets and consolidation worksheets — organised by topic and year group.</p>
-    </div>
-    <div class="grid g-3">
-      <div class="reveal"><div class="ph" data-label="animated lessons" style="aspect-ratio:4/3;"></div></div>
-      <div class="reveal d1"><div class="ph" data-label="printable worksheets" style="aspect-ratio:4/3;"></div></div>
-      <div class="reveal d2"><div class="ph" data-label="enrichment + activities" style="aspect-ratio:4/3;"></div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;" class="hero-grid">
+      <div>
+        <p class="eyebrow reveal" style="margin-bottom:16px;">Teachers' Resource</p>
+        <h2 class="reveal d1" style="margin-top:14px;">An all-in-one library</h2>
+        <p class="reveal d2 lede" style="margin-top:18px;">A rich library of interactive animated lessons, structured classroom activities, printable worksheets, enrichment tasks, and consolidation materials, all organised by topic and year group to save time and ensure consistency.</p>
+        <div class="grid" style="gap:14px;margin-top:28px;">
+          <div class="reveal d2" style="display:flex;gap:12px;align-items:flex-start;">
+            <div style="width:26px;height:26px;border-radius:50%;background:var(--green-100);color:var(--green-700);display:grid;place-items:center;font-size:.85rem;font-weight:700;flex:none;">✓</div>
+            <p style="color:var(--ink-soft);">Reinforce fundamental concepts, extend challenge for advanced learners, and support assessment, all from one place.</p>
+          </div>
+          <div class="reveal d3" style="display:flex;gap:12px;align-items:flex-start;">
+            <div style="width:26px;height:26px;border-radius:50%;background:var(--green-100);color:var(--green-700);display:grid;place-items:center;font-size:.85rem;font-weight:700;flex:none;">✓</div>
+            <p style="color:var(--ink-soft);">Supports whole-class teaching, small-group intervention, and individual learning. Plan, deliver, and adapt maths lessons with confidence.</p>
+          </div>
+        </div>
+      </div>
+      <div class="reveal d1">
+        <img src="teachers-resource.png" alt="Maths-Whizz Teachers' Resource — worksheets, activities, enrichment sheets, classroom resources and lessons" style="width:100%;border-radius:var(--r-lg);box-shadow:var(--sh);display:block;">
+      </div>
     </div>
   </div>
 </section>
@@ -1188,14 +1191,14 @@ section { position: relative; }
   <div class="wrap">
     <div class="grid g-2">
       <div class="card hover reveal" style="padding:0;overflow:hidden;">
-        <div class="ph video" data-video="Why students love Maths-Whizz" data-label="pupils' video" style="aspect-ratio:16/9;border-radius:0;"><span class="play-tri"></span></div>
+        <div class="ph video" data-video="Why students love Maths-Whizz" data-video-src="https://www.youtube.com/watch?v=AcoGZBm0gcg" data-label="" style="aspect-ratio:16/9;border-radius:0;background:url(https://img.youtube.com/vi/AcoGZBm0gcg/maxresdefault.jpg) center/cover no-repeat;border:none;"><span class="play-tri"></span></div>
         <div style="padding:28px;">
           <h3>Why students love it</h3>
-          <p class="muted" style="margin-top:8px;">Gamification keeps pupils motivated with gems, avatars and levelling up — while the Tutor quietly fills gaps.</p>
+          <p class="muted" style="margin-top:8px;">Gamification keeps pupils motivated with gems, avatars and levelling up, while the Tutor quietly fills gaps.</p>
         </div>
       </div>
       <div class="card hover reveal d1" style="padding:0;overflow:hidden;">
-        <div class="ph video" data-video="Why teachers love Maths-Whizz" data-label="teachers' video" style="aspect-ratio:16/9;border-radius:0;"><span class="play-tri"></span></div>
+        <div class="ph video" data-video="Why teachers love Maths-Whizz" data-video-src="https://www.youtube.com/watch?v=G3QIoezpPsg" data-label="" style="aspect-ratio:16/9;border-radius:0;background:url(https://img.youtube.com/vi/G3QIoezpPsg/maxresdefault.jpg) center/cover no-repeat;border:none;"><span class="play-tri"></span></div>
         <div style="padding:28px;">
           <h3>Why teachers love it</h3>
           <p class="muted" style="margin-top:8px;">Mapped to 98% of the UK curriculum with clear, real-time progress insights for teachers and parents.</p>
@@ -1247,21 +1250,22 @@ section { position: relative; }
   <div class="wrap">
     <div class="research reveal" style="text-align:center;">
       <span class="eyebrow center" style="justify-content:center;color:var(--green-200);margin-bottom:18px;">Our mission</span>
-      <p style="max-width:30ch;margin:0 auto;">"Our mission is to enable schools across the UK to access and integrate the latest technology, enriching education and improving outcomes for <span class="em">every student</span>."</p>
+      <p style="max-width:34ch;margin:0 auto;">"Our mission is to enable schools across the UK to access and integrate the latest technology, enriching education and improving outcomes for <span class="em">every student</span>."</p>
     </div>
   </div>
 </section>
 
 <section class="section">
   <div class="wrap">
-    <div class="grid g-2" style="gap:48px;">
+    <div class="grid g-2" style="gap:56px;">
       <div class="reveal">
         <p class="eyebrow">Our journey</p>
-        <p class="lede" style="margin-top:16px;">Founded in Kington, our story began with a simple goal — to help schools access technology that genuinely enhances learning. What started locally has grown into partnerships with leading EdTech companies across the UK.</p>
+        <p class="lede" style="margin-top:16px;">Founded in Kington, our story began with a simple goal: to help schools access technology that genuinely enhances learning. What started as a local initiative has grown into partnerships with leading EdTech companies across the UK, connecting innovative solutions with schools that want real results.</p>
+        <p style="margin-top:16px;color:var(--ink-soft);">Our journey continues as we work to bridge the gap between technology and teaching, ensuring every school can benefit from tools that inspire both educators and learners.</p>
       </div>
       <div class="reveal d1">
         <p class="eyebrow">Who we serve</p>
-        <p class="lede" style="margin-top:16px;">UK school decision-makers and teachers adopting EdTech — from individual teachers to whole-school rollouts, with the support you need.</p>
+        <p class="lede" style="margin-top:16px;">We support UK school decision-makers and teachers who are adopting EdTech solutions to enhance learning. From individual teachers to whole-school implementations, we provide the support you need.</p>
       </div>
     </div>
   </div>
@@ -1277,32 +1281,53 @@ section { position: relative; }
       <div class="card hover reveal">
         <div class="step-num ghost" style="margin-bottom:18px;">1</div>
         <h3>Passion for education</h3>
-        <p>An unwavering passion fuels our work — every product must inspire, engage and drive meaningful change in the classroom.</p>
+        <p>An unwavering passion for education fuels our work. This commitment ensures every product we take on is not just technologically advanced, but deeply dedicated to inspiring, engaging, and driving meaningful change in the classroom.</p>
       </div>
       <div class="card hover reveal d1">
         <div class="step-num ghost" style="margin-bottom:18px;">2</div>
         <h3>Excellence in outcomes</h3>
-        <p>We choose solutions designed to deliver and evidence results, making student achievement the measure of quality.</p>
+        <p>Our product philosophy is driven by excellence in outcomes. We ensure our solutions are designed to deliver and evidence the positive results that truly matter, making student achievement the ultimate measure of product quality.</p>
       </div>
       <div class="card hover reveal d2">
         <div class="step-num ghost" style="margin-bottom:18px;">3</div>
         <h3>Accessible by design</h3>
-        <p>We ensure products are easy to access and integrate seamlessly into classrooms.</p>
+        <p>We make it a priority to ensure our products are easily accessible and seamlessly integrate into classrooms, removing friction so teachers can focus on teaching.</p>
       </div>
       <div class="card hover reveal">
         <div class="step-num ghost" style="margin-bottom:18px;">4</div>
         <h3>Driving teaching forward</h3>
-        <p>We back solutions that advance teaching models and keep educators at the leading edge.</p>
+        <p>Our solutions are designed to actively drive forward new teaching models, fostering continuous growth and ensuring educators and students are always at the leading edge.</p>
       </div>
       <div class="card hover reveal d1">
         <div class="step-num ghost" style="margin-bottom:18px;">5</div>
         <h3>Inclusive &amp; equitable</h3>
-        <p>Products that remove barriers and adapt to diverse needs — every learner, regardless of background or ability.</p>
+        <p>We believe every learner deserves access to high-quality educational resources. Our products are designed to remove barriers, adapt to diverse needs, and support all students regardless of background, ability, or learning style.</p>
       </div>
       <div class="card hover reveal d2">
         <div class="step-num ghost" style="margin-bottom:18px;">6</div>
         <h3>Long-term partnership</h3>
-        <p>Every school relationship is built on trust, transparency and collaboration, from implementation to ongoing support.</p>
+        <p>We see every school relationship as a long-term partnership built on trust, transparency, and collaboration. From implementation to ongoing support, we're committed to helping schools achieve their goals and grow with confidence.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;" class="hero-grid">
+      <div class="reveal">
+        <p class="eyebrow" style="margin-bottom:16px;">Find us</p>
+        <h2 style="margin-top:14px;">Based in Kington, Herefordshire</h2>
+        <p class="lede" style="margin-top:18px;max-width:42ch;">We are based in Kington, a market town in Herefordshire, on the English–Welsh border.</p>
+        <a href="https://www.google.com/maps/place/Kington,+Herefordshire" target="_blank" rel="noopener" class="btn btn-secondary" style="margin-top:26px;">Open in Google Maps <span class="arr">→</span></a>
+      </div>
+      <div class="reveal d1" style="border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh);">
+        <iframe
+          src="https://maps.google.com/maps?q=Kington,+Herefordshire,+HR5,+UK&t=&z=13&ie=UTF8&iwloc=&output=embed"
+          width="100%" height="360" style="border:none;display:block;"
+          allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          title="Kington, Herefordshire on Google Maps">
+        </iframe>
       </div>
     </div>
   </div>
@@ -1375,7 +1400,7 @@ section { position: relative; }
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>
         </div>
         <h3>EdTech-fluent representation</h3>
-        <p>We speak the language of pedagogy and procurement — and represent you credibly.</p>
+        <p>We speak the language of pedagogy and procurement, and represent you credibly.</p>
       </div>
     </div>
   </div>
@@ -1383,15 +1408,31 @@ section { position: relative; }
 
 <section class="section">
   <div class="wrap">
-    <div class="center" style="max-width:560px;margin:0 auto 44px;">
+    <div class="center" style="max-width:560px;margin:0 auto 48px;">
       <p class="eyebrow center reveal" style="justify-content:center;">Our distribution partners</p>
       <h2 class="reveal d1" style="margin-top:14px;">In good company</h2>
     </div>
-    <div class="grid g-4 reveal d1">
-      <div class="ph logo-ph" data-label="partner logo"></div>
-      <div class="ph logo-ph" data-label="partner logo"></div>
-      <div class="ph logo-ph" data-label="partner logo"></div>
-      <div class="ph logo-ph" data-label="partner logo"></div>
+    <div class="paths reveal d1">
+
+      <!-- Current partner -->
+      <div class="research" style="display:flex;flex-direction:column;gap:22px;">
+        <span class="locktag">✓ &nbsp;Official UK Partner</span>
+        <div style="background:#fff;border-radius:var(--r);padding:18px 28px;display:inline-flex;align-items:center;">
+          <img src="maths-whizz-logo.jpeg" alt="Maths-Whizz by Whizz Education" style="max-height:56px;max-width:220px;object-fit:contain;display:block;mix-blend-mode:multiply;">
+        </div>
+        <p style="color:var(--green-200);font-size:1.05rem;line-height:1.55;">Kington Education is the official UK distribution partner for Maths-Whizz, bringing Whizz Education's award-winning AI maths tutor to primary and secondary schools across the UK.</p>
+      </div>
+
+      <!-- Open to more -->
+      <div class="path alt" style="display:flex;flex-direction:column;gap:18px;justify-content:space-between;">
+        <div>
+          <div class="num" style="font-size:1.6rem;margin-bottom:18px;">+</div>
+          <h3>Open to new partnerships</h3>
+          <p class="muted" style="margin-top:12px;line-height:1.6;">We're always looking for the next great EdTech product to bring to UK schools. If you have a solution that could make a real difference to teachers and pupils, we'd love to hear from you.</p>
+        </div>
+        <a href="contact.html#book" class="btn btn-primary" style="align-self:flex-start;">Book a conversation <span class="arr">→</span></a>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1432,7 +1473,7 @@ section { position: relative; }
         <form data-demo-form novalidate>
           <p class="eyebrow" style="margin-bottom:8px;">① Watch first · sends full demo video</p>
           <h3 style="font-size:1.6rem;margin-bottom:6px;">Get the full demo video</h3>
-          <p class="muted" style="margin-bottom:24px;">Tell us a little about your school and we'll send the full walkthrough — or book a live call.</p>
+          <p class="muted" style="margin-bottom:24px;">Tell us a little about your school and we'll send the full walkthrough, or book a live call.</p>
           <div class="form-row">
             <div class="field">
               <label>Full name</label>
@@ -1505,21 +1546,46 @@ section { position: relative; }
         <div class="form-success">
           <div class="badge">✓</div>
           <h3 style="font-size:1.6rem;">On its way, <span data-name="">there</span>!</h3>
-          <p class="muted" style="margin:10px auto 22px;max-width:40ch;">Check your inbox — your personalised Maths-Whizz walkthrough is landing now. Prefer a live demo?</p>
+          <p class="muted" style="margin:10px auto 22px;max-width:40ch;">Check your inbox. Your personalised Maths-Whizz walkthrough is landing now. Prefer a live demo?</p>
           <a href="#book" class="btn btn-secondary">Book a 15-min call <span class="arr">→</span></a>
         </div>
       </div>
 
-      <div class="card reveal d1" id="book" style="padding:0;overflow:hidden;position:sticky;top:100px;">
-        <div style="padding:32px 32px 0;">
-          <p class="eyebrow" style="margin-bottom:8px;">② Talk to us · calendar booking</p>
-          <h3 style="font-size:1.6rem;margin-bottom:6px;">Book a live call</h3>
-          <p class="muted">Prefer a person? Grab a 15-minute slot for a tailored walkthrough.</p>
+      <div class="card reveal d1" id="book" style="display:flex;flex-direction:column;gap:0;">
+        <p class="eyebrow" style="margin-bottom:8px;">② Talk to us · calendar booking</p>
+        <h3 style="font-size:1.6rem;margin-bottom:10px;">Book a live call</h3>
+        <p class="muted" style="margin-bottom:28px;">Prefer a person? Grab a 15-minute slot and we'll walk you through Maths-Whizz and answer any questions.</p>
+        <div style="background:var(--green-50);border:1px solid var(--green-100);border-radius:var(--r-lg);padding:28px;display:flex;flex-direction:column;gap:18px;margin-bottom:22px;">
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div style="width:46px;height:46px;border-radius:12px;background:var(--green-100);color:var(--green-700);display:grid;place-items:center;flex:none;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            </div>
+            <div>
+              <p style="font-family:var(--display);font-weight:700;color:var(--ink);">Pick a time that suits you</p>
+              <p style="font-size:.88rem;color:var(--muted);margin-top:2px;">15 minutes · no preparation needed</p>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div style="width:46px;height:46px;border-radius:12px;background:var(--green-100);color:var(--green-700);display:grid;place-items:center;flex:none;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 4.07 4.18 2 2 0 0 1 6.07 2h3a2 2 0 0 1 2 1.72c.13 1 .37 1.97.72 2.9a2 2 0 0 1-.45 2.11L10.09 9.91a16 16 0 0 0 6 6l1.18-1.18a2 2 0 0 1 2.11-.45c.93.35 1.9.59 2.9.72A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div>
+              <p style="font-family:var(--display);font-weight:700;color:var(--ink);">Talk to Paul</p>
+              <p style="font-size:.88rem;color:var(--muted);margin-top:2px;">Real people, no scripts</p>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div style="width:46px;height:46px;border-radius:12px;background:var(--green-100);color:var(--green-700);display:grid;place-items:center;flex:none;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <div>
+              <p style="font-family:var(--display);font-weight:700;color:var(--ink);">Confirmation sent instantly</p>
+              <p style="font-size:.88rem;color:var(--muted);margin-top:2px;">Calendar invite straight to your inbox</p>
+            </div>
+          </div>
         </div>
-        <div style="padding:24px 32px 32px;">
-          <div class="ph" data-label="embedded scheduler — Outlook Bookings" style="aspect-ratio:1/1;min-height:300px;"></div>
-          <a href="#" class="btn btn-primary btn-block" style="margin-top:18px;">Pick a time <span class="arr">→</span></a>
-        </div>
+        <a href="https://outlook.office.com/book/KingtonEducation@NETORGFT19657945.onmicrosoft.com/?ismsaljsauthenabled" target="_blank" rel="noopener" class="btn btn-primary btn-block btn-cta-pulse">See available times <span class="arr">→</span></a>
+        <p style="text-align:center;font-size:.8rem;color:var(--muted);margin-top:12px;">Opens our booking calendar in a new tab</p>
       </div>
 
     </div>
@@ -1578,7 +1644,7 @@ section { position: relative; }
       </div>
       <div>
         <h3>When a pilot is live, you'll see it here</h3>
-        <p class="muted" style="margin-top:6px;">Research-school programmes, MAT-wide rollouts and active pilots — with results and case studies as they happen. Want to be part of the next one?</p>
+        <p class="muted" style="margin-top:6px;">Research-school programmes, MAT-wide rollouts and active pilots, with results and case studies as they happen. Want to be part of the next one?</p>
       </div>
     </div>
   </div>
@@ -1796,10 +1862,16 @@ section { position: relative; }
     document.addEventListener('click', function (e) {
       var v = e.target.closest('[data-video]');
       if (!v) return;
-      if (frame) frame.textContent = v.getAttribute('data-video') || 'video player';
+      var src = v.getAttribute('data-video-src');
+      if (src) { window.open(src, '_blank', 'noopener'); return; }
+      if (frame) frame.innerHTML = '<span style="color:rgba(255,255,255,.7);font-family:var(--mono);font-size:.9rem;">' + (v.getAttribute('data-video') || 'Video coming soon') + '</span>';
       lb.classList.add('open'); document.body.style.overflow = 'hidden';
     });
-    function closeLb() { lb.classList.remove('open'); document.body.style.overflow = ''; }
+    function closeLb() {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+      if (frame) frame.innerHTML = '';
+    }
     lb.querySelector('.close').addEventListener('click', closeLb);
     lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeLb(); });
@@ -1852,6 +1924,11 @@ section { position: relative; }
   var hash = (location.hash || '').replace(/^#/, '');
   var anc  = null;
   if (hash.indexOf('/') > -1) { var parts = hash.split('/'); hash = parts[0]; anc = parts[1]; }
+  /* Handle direct path navigation via .htaccess rewrite (e.g. /contact.html#demo from email link) */
+  if (!hash || PAGES.indexOf(hash) === -1) {
+    var pathPage = MAP[location.pathname.replace(/^\//, '')];
+    if (pathPage) { hash = pathPage; anc = (location.hash || '').replace(/^#/, '') || null; }
+  }
   showPage(hash || 'home', anc, false);
 
 })();
