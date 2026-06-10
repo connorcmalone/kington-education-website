@@ -782,7 +782,7 @@ section { position: relative; }
         <!-- Explainer video -->
         <div class="reveal d4" style="margin-top:32px;">
           <p style="font-family:var(--display);font-weight:700;font-size:.86rem;letter-spacing:.04em;text-transform:uppercase;color:var(--green-700);margin-bottom:12px;">See it in 3 minutes</p>
-          <div class="ph video" data-video="See how the Virtual Tutor works" data-video-src="https://www.youtube.com/watch?v=Cd947JpVfes" data-label="" style="aspect-ratio:16/9;border-radius:var(--r-lg);box-shadow:var(--sh);max-width:480px;background:url(https://img.youtube.com/vi/Cd947JpVfes/maxresdefault.jpg) center/cover no-repeat;border:none;">
+          <div class="ph video" data-video="See how the Virtual Tutor works" data-video-src="https://www.youtube-nocookie.com/embed/Cd947JpVfes?rel=0&autoplay=1" data-label="" style="aspect-ratio:16/9;border-radius:var(--r-lg);box-shadow:var(--sh);max-width:480px;background:url(https://img.youtube.com/vi/Cd947JpVfes/maxresdefault.jpg) center/cover no-repeat;border:none;">
             <span class="play-tri"></span>
           </div>
           <p style="margin-top:12px;font-size:.88rem;color:var(--muted);max-width:38ch;">A quick overview of how Maths-Whizz works and the difference it makes. No sign-up needed.</p>
@@ -1080,7 +1080,7 @@ section { position: relative; }
   <div class="wrap">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;" class="hero-grid">
       <div class="reveal">
-        <div class="ph video" data-video="See how the Virtual Tutor works" data-video-src="https://www.youtube.com/watch?v=iZ-T3WgbMqo" data-label="" style="aspect-ratio:16/10;box-shadow:var(--sh);background:url(https://img.youtube.com/vi/iZ-T3WgbMqo/maxresdefault.jpg) center/cover no-repeat;border:none;">
+        <div class="ph video" data-video="See how the Virtual Tutor works" data-video-src="https://www.youtube-nocookie.com/embed/iZ-T3WgbMqo?rel=0&autoplay=1" data-label="" style="aspect-ratio:16/10;box-shadow:var(--sh);background:url(https://img.youtube.com/vi/iZ-T3WgbMqo/maxresdefault.jpg) center/cover no-repeat;border:none;">
           <span class="play-tri"></span>
         </div>
       </div>
@@ -1191,14 +1191,14 @@ section { position: relative; }
   <div class="wrap">
     <div class="grid g-2">
       <div class="card hover reveal" style="padding:0;overflow:hidden;">
-        <div class="ph video" data-video="Why students love Maths-Whizz" data-video-src="https://www.youtube.com/watch?v=AcoGZBm0gcg" data-label="" style="aspect-ratio:16/9;border-radius:0;background:url(https://img.youtube.com/vi/AcoGZBm0gcg/maxresdefault.jpg) center/cover no-repeat;border:none;"><span class="play-tri"></span></div>
+        <div class="ph video" data-video="Why students love Maths-Whizz" data-video-src="https://www.youtube-nocookie.com/embed/AcoGZBm0gcg?rel=0&autoplay=1" data-label="" style="aspect-ratio:16/9;border-radius:0;background:url(https://img.youtube.com/vi/AcoGZBm0gcg/maxresdefault.jpg) center/cover no-repeat;border:none;"><span class="play-tri"></span></div>
         <div style="padding:28px;">
           <h3>Why students love it</h3>
           <p class="muted" style="margin-top:8px;">Gamification keeps pupils motivated with gems, avatars and levelling up, while the Tutor quietly fills gaps.</p>
         </div>
       </div>
       <div class="card hover reveal d1" style="padding:0;overflow:hidden;">
-        <div class="ph video" data-video="Why teachers love Maths-Whizz" data-video-src="https://www.youtube.com/watch?v=G3QIoezpPsg" data-label="" style="aspect-ratio:16/9;border-radius:0;background:url(https://img.youtube.com/vi/G3QIoezpPsg/maxresdefault.jpg) center/cover no-repeat;border:none;"><span class="play-tri"></span></div>
+        <div class="ph video" data-video="Why teachers love Maths-Whizz" data-video-src="https://www.youtube-nocookie.com/embed/G3QIoezpPsg?rel=0&autoplay=1" data-label="" style="aspect-ratio:16/9;border-radius:0;background:url(https://img.youtube.com/vi/G3QIoezpPsg/maxresdefault.jpg) center/cover no-repeat;border:none;"><span class="play-tri"></span></div>
         <div style="padding:28px;">
           <h3>Why teachers love it</h3>
           <p class="muted" style="margin-top:8px;">Mapped to 98% of the UK curriculum with clear, real-time progress insights for teachers and parents.</p>
@@ -1863,8 +1863,13 @@ section { position: relative; }
       var v = e.target.closest('[data-video]');
       if (!v) return;
       var src = v.getAttribute('data-video-src');
-      if (src) { window.open(src, '_blank', 'noopener'); return; }
-      if (frame) frame.innerHTML = '<span style="color:rgba(255,255,255,.7);font-family:var(--mono);font-size:.9rem;">' + (v.getAttribute('data-video') || 'Video coming soon') + '</span>';
+      if (frame) {
+        if (src) {
+          frame.innerHTML = '<iframe src="' + src + '" allow="autoplay; fullscreen" allowfullscreen></iframe>';
+        } else {
+          frame.innerHTML = '<span style="color:rgba(255,255,255,.7);font-family:var(--mono);font-size:.9rem;">' + (v.getAttribute('data-video') || 'Video coming soon') + '</span>';
+        }
+      }
       lb.classList.add('open'); document.body.style.overflow = 'hidden';
     });
     function closeLb() {
