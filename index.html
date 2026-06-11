@@ -2029,8 +2029,9 @@ section { position: relative; }
   (function(){
     var el = document.getElementById('services-carousel');
     if (!el) return;
+    var wrap  = el.parentElement;
     var track = el.querySelector('.carousel-track');
-    var dots  = el.querySelectorAll('.carousel-dots button');
+    var dots  = wrap.querySelectorAll('.carousel-dots button');
     var total = dots.length;
     var cur   = 0;
     var timer;
@@ -2051,8 +2052,8 @@ section { position: relative; }
       requestAnimationFrame(function(){ track.style.transition = ''; });
     });
 
-    el.querySelector('.carousel-prev').addEventListener('click', function(){ goTo(cur - 1); });
-    el.querySelector('.carousel-next').addEventListener('click', function(){ goTo(cur + 1); });
+    wrap.querySelector('.carousel-prev').addEventListener('click', function(){ goTo(cur - 1); });
+    wrap.querySelector('.carousel-next').addEventListener('click', function(){ goTo(cur + 1); });
     dots.forEach(function(d, i){ d.addEventListener('click', function(){ goTo(i); }); });
     el.addEventListener('mouseenter', function(){ clearInterval(timer); });
     el.addEventListener('mouseleave', function(){ timer = setInterval(function(){ goTo(cur + 1); }, 5500); });
