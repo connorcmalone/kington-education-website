@@ -684,15 +684,20 @@ section { position: relative; }
   to   { opacity: 1; transform: none; }
 }
 
-/* ---- progress-vis ---- */
-.progress-vis { margin-bottom:28px; }
-.progress-vis-track { position:relative; height:6px; background:rgba(255,255,255,.15); border-radius:3px; margin-bottom:10px; overflow:visible; }
-.progress-vis-fill { height:100%; width:0; background:linear-gradient(90deg,var(--green-400),#f59e0b); border-radius:3px; position:relative; transition:width 1.6s cubic-bezier(.4,0,.2,1); }
-.progress-vis-fill.go { width:100%; }
-.progress-vis-dot { position:absolute; top:50%; right:0; width:14px; height:14px; background:#f59e0b; border-radius:50%; transform:translate(50%,-50%); box-shadow:0 0 0 4px rgba(245,158,11,.25); }
-.progress-vis-labels { display:flex; justify-content:space-between; font-size:.7rem; color:rgba(255,255,255,.45); }
-.progress-vis-end { color:#f59e0b !important; font-weight:700; }
-@media(prefers-reduced-motion:reduce){ .progress-vis-fill { transition:none; } }
+/* ---- bar-compare ---- */
+.bar-compare { margin-bottom:28px; display:flex; flex-direction:column; gap:16px; }
+.bar-compare-row { display:grid; grid-template-columns:160px 1fr; align-items:center; gap:14px; }
+@media(max-width:480px){ .bar-compare-row { grid-template-columns:90px 1fr; } }
+.bar-compare-label { font-size:.72rem; font-weight:600; color:rgba(255,255,255,.5); }
+.bar-compare-track { display:flex; align-items:center; gap:12px; }
+.bar-compare-fill { height:8px; border-radius:4px; width:0; transition:width 1.4s cubic-bezier(.4,0,.2,1); flex-shrink:0; }
+.bar-compare-fill--muted { background:rgba(255,255,255,.25); }
+.bar-compare-fill--amber { background:linear-gradient(90deg,var(--green-400),#f59e0b); }
+.bar-compare-fill.go { width:calc(var(--bar-w) * 1%); }
+.bar-compare-val { font-size:.78rem; font-weight:700; color:rgba(255,255,255,.55); white-space:nowrap; opacity:0; transition:opacity .3s .9s; }
+.bar-compare-fill.go + .bar-compare-val { opacity:1; }
+.bar-compare-val--amber { color:#f59e0b; }
+@media(prefers-reduced-motion:reduce){ .bar-compare-fill,.bar-compare-val { transition:none; } }
 
 /* ---- carousel ---- */
 .carousel { position:relative; overflow:hidden; outline:none; }
@@ -918,19 +923,22 @@ section { position: relative; }
 <section class="section">
   <div class="wrap">
     <p class="eyebrow reveal" style="margin-bottom:14px;">Why schools choose Maths-Whizz</p>
-    <h2 class="reveal d1" style="margin-bottom:40px;max-width:36ch;">The platform we've partnered to deliver and support across the UK.</h2>
+    <h2 class="reveal d1" style="margin-bottom:40px;max-width:36ch;text-align:center;margin-left:auto;margin-right:auto;">The platform we've partnered to deliver and support across the UK.</h2>
     <div class="research reveal d2" style="max-width:720px;margin:0 auto;">
-        <div class="progress-vis" aria-hidden="true">
-          <div class="progress-vis-track">
-            <div class="progress-vis-fill">
-              <div class="progress-vis-dot"></div>
+        <div class="bar-compare" aria-hidden="true">
+          <div class="bar-compare-row">
+            <span class="bar-compare-label">One school year</span>
+            <div class="bar-compare-track">
+              <div class="bar-compare-fill bar-compare-fill--muted" style="--bar-w:66.7"></div>
+              <span class="bar-compare-val">12 months</span>
             </div>
           </div>
-          <div class="progress-vis-labels">
-            <span>0</span>
-            <span>+6m</span>
-            <span>+12m</span>
-            <span class="progress-vis-end">+18m</span>
+          <div class="bar-compare-row">
+            <span class="bar-compare-label">Average Maths Age gain</span>
+            <div class="bar-compare-track">
+              <div class="bar-compare-fill bar-compare-fill--amber" style="--bar-w:100"></div>
+              <span class="bar-compare-val bar-compare-val--amber">+18 months</span>
+            </div>
           </div>
         </div>
         <span class="locktag">🔒 Verbatim · independently verified</span>
@@ -1870,10 +1878,16 @@ section { position: relative; }
   /* ---- progress bar ---- */
   var barIo = new IntersectionObserver(function(entries){
     entries.forEach(function(e){
-      if(e.isIntersecting){ e.target.classList.add('go'); barIo.unobserve(e.target); }
+      if(e.isIntersecting){
+        e.target.querySelectorAll('.bar-compare-fill').forEach(function(f){ f.classList.add('go'); });
+        barIo.unobserve(e.target);
+      }
     });
   },{threshold:0.5});
-  document.querySelectorAll('.progress-vis-fill').forEach(function(el){ if(!reduce) barIo.observe(el); else el.classList.add('go'); });
+  document.querySelectorAll('.bar-compare').forEach(function(el){
+    if(!reduce) barIo.observe(el);
+    else el.querySelectorAll('.bar-compare-fill').forEach(function(f){ f.classList.add('go'); });
+  });
 
   /* ---- scroll progress ---- */
   var progressEl = document.getElementById('scrollProgress');
