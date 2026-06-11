@@ -148,13 +148,13 @@ section { position: relative; }
 .btn:hover .arr { transform: translateX(4px); }
 
 .btn-primary {
-  background: var(--green-700); color: #fff;
-  box-shadow: 0 6px 18px rgba(27,107,67,.28);
+  background: var(--amber); color: #fff;
+  box-shadow: 0 6px 18px rgba(201,138,43,.28);
 }
 .btn-primary:hover {
-  background: var(--green-800);
+  background: #b07524;
   transform: translateY(-2px);
-  box-shadow: 0 10px 26px rgba(27,107,67,.38);
+  box-shadow: 0 10px 26px rgba(201,138,43,.38);
 }
 .btn-primary::after {
   content: "";
@@ -217,7 +217,7 @@ section { position: relative; }
 .logo-mark {
   width: 42px; height: 42px; border-radius: 12px; flex: none;
   background: linear-gradient(150deg, var(--green-600), var(--green-800));
-  color: #fff; display: grid; place-items: center;
+  color: #fff; display: grid; place-items: center; overflow: hidden;
   font-family: var(--display); font-weight: 900; font-size: 1.4rem;
   box-shadow: 0 4px 12px rgba(20,83,47,.32), inset 0 1px 0 rgba(255,255,255,.25);
   letter-spacing: -0.02em;
@@ -571,7 +571,7 @@ section { position: relative; }
 /* ============================================================
    HERO SECTION — ANIMATED BG BLOBS
    ============================================================ */
-.hero-section { overflow: hidden; }
+.hero-section { overflow: hidden; position: relative; }
 .hero-blobs {
   position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 0;
 }
@@ -731,7 +731,7 @@ section { position: relative; }
 <header class="nav">
   <div class="wrap">
     <a class="logo" href="index.html" aria-label="Kington Education home">
-      <span class="logo-mark">K</span>
+      <span class="logo-mark"><svg width="42" height="42" viewBox="0 0 42 42" fill="none" style="width:100%;height:100%;display:block;" aria-hidden="true"><path d="M8,13 H15 V22 L27,13 H35 L21,23.5 L35,34 H27 L15,25 V34 H8 Z" fill="white"/><path d="M11,13 C6,9 5,4 8,1 C10,0 14,5 11,13Z" fill="#5cc389" opacity=".88"/><path d="M16,13 C21,9 22,4 19,1 C18,0 14,5 16,13Z" fill="#9bd6b3" opacity=".8"/><path d="M11,13 C9,8 8,4 8,1" stroke="rgba(15,61,41,.35)" stroke-width=".7" fill="none"/><path d="M16,13 C18,8 19,4 19,1" stroke="rgba(15,61,41,.35)" stroke-width=".7" fill="none"/><line x1="4" y1="18" x2="8" y2="18" stroke="#c98a2b" stroke-width="1.1" stroke-linecap="round"/><circle cx="4" cy="18" r="1.4" fill="#c98a2b"/><line x1="4" y1="27" x2="8" y2="27" stroke="#c98a2b" stroke-width="1.1" stroke-linecap="round"/><circle cx="4" cy="27" r="1.4" fill="#c98a2b"/></svg></span>
       <span class="logo-name">Kington<span>Education</span></span>
     </a>
     <nav class="nav-links">
@@ -773,6 +773,11 @@ section { position: relative; }
   <div class="hero-blobs" aria-hidden="true">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
+  </div>
+  <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0;">
+    <svg style="position:absolute;top:-30px;right:-40px;width:190px;height:250px;opacity:.075;transform:rotate(12deg);" viewBox="0 0 100 140" fill="none"><path d="M50,136 C28,116 5,80 5,50 C5,22 20,3 50,3 C80,3 95,22 95,50 C95,80 72,116 50,136Z" fill="#1b6b43"/><path d="M50,136 Q49,68 50,3" stroke="#0f3d29" stroke-width="1.5" fill="none" opacity=".5"/><path d="M49,90 Q33,82 22,68" stroke="#0f3d29" stroke-width="1" fill="none" opacity=".4"/><path d="M51,90 Q67,82 78,68" stroke="#0f3d29" stroke-width="1" fill="none" opacity=".4"/><path d="M48,62 Q32,54 24,42" stroke="#0f3d29" stroke-width=".8" fill="none" opacity=".3"/><path d="M52,62 Q68,54 76,42" stroke="#0f3d29" stroke-width=".8" fill="none" opacity=".3"/></svg>
+    <svg style="position:absolute;top:30px;right:110px;width:100px;height:135px;opacity:.05;transform:rotate(-22deg);" viewBox="0 0 100 140" fill="none"><path d="M50,136 C28,116 5,80 5,50 C5,22 20,3 50,3 C80,3 95,22 95,50 C95,80 72,116 50,136Z" fill="#228b55"/><path d="M50,136 Q49,68 50,3" stroke="#1b6b43" stroke-width="1.5" fill="none" opacity=".45"/><path d="M49,90 Q33,82 22,68" stroke="#1b6b43" stroke-width="1" fill="none" opacity=".35"/><path d="M51,90 Q67,82 78,68" stroke="#1b6b43" stroke-width="1" fill="none" opacity=".35"/></svg>
+    <svg style="position:absolute;bottom:-15px;left:-25px;width:130px;height:175px;opacity:.06;transform:rotate(-38deg);" viewBox="0 0 100 140" fill="none"><path d="M50,136 C28,116 5,80 5,50 C5,22 20,3 50,3 C80,3 95,22 95,50 C95,80 72,116 50,136Z" fill="#1b6b43"/><path d="M50,136 Q49,68 50,3" stroke="#0f3d29" stroke-width="1.5" fill="none" opacity=".45"/><path d="M49,90 Q33,82 22,68" stroke="#0f3d29" stroke-width="1" fill="none" opacity=".35"/><path d="M51,90 Q67,82 78,68" stroke="#0f3d29" stroke-width="1" fill="none" opacity=".35"/></svg>
   </div>
   <div class="wrap" style="position:relative;z-index:1;">
     <div class="hero-grid">
@@ -1043,6 +1048,7 @@ section { position: relative; }
 </section>
 
 <!-- ===== FINAL CTA ===== -->
+<div style="text-align:center;padding:20px 0 0;line-height:0;opacity:.65;" aria-hidden="true"><svg width="96" height="64" viewBox="0 0 96 64" fill="none" style="display:inline-block;"><g transform="translate(48,62) rotate(-30)"><path d="M0,0 C-5,-7 -7,-19 -3,-30 C-1,-34 1,-34 3,-30 C7,-19 5,-7 0,0Z" fill="#1b6b43"/><line x1="0" y1="0" x2="0" y2="-33" stroke="#0f3d29" stroke-width=".7" opacity=".4"/></g><g transform="translate(48,62) rotate(0)"><path d="M0,0 C-6,-9 -8,-24 -3,-38 C-1,-43 1,-43 3,-38 C8,-24 6,-9 0,0Z" fill="#1b6b43"/><line x1="0" y1="0" x2="0" y2="-42" stroke="#0f3d29" stroke-width=".7" opacity=".4"/></g><g transform="translate(48,62) rotate(30)"><path d="M0,0 C-5,-7 -7,-19 -3,-30 C-1,-34 1,-34 3,-30 C7,-19 5,-7 0,0Z" fill="#1b6b43"/><line x1="0" y1="0" x2="0" y2="-33" stroke="#0f3d29" stroke-width=".7" opacity=".4"/></g></svg></div>
 <section class="section-tight">
   <div class="wrap">
     <div class="cta-band reveal" style="text-align:center;">
@@ -1778,7 +1784,7 @@ section { position: relative; }
     <div class="ft-grid">
       <div>
         <a class="logo" href="index.html" style="margin-bottom:18px;">
-          <span class="logo-mark">K</span>
+          <span class="logo-mark"><svg width="42" height="42" viewBox="0 0 42 42" fill="none" style="width:100%;height:100%;display:block;" aria-hidden="true"><path d="M8,13 H15 V22 L27,13 H35 L21,23.5 L35,34 H27 L15,25 V34 H8 Z" fill="white"/><path d="M11,13 C6,9 5,4 8,1 C10,0 14,5 11,13Z" fill="#5cc389" opacity=".88"/><path d="M16,13 C21,9 22,4 19,1 C18,0 14,5 16,13Z" fill="#9bd6b3" opacity=".8"/><path d="M11,13 C9,8 8,4 8,1" stroke="rgba(15,61,41,.35)" stroke-width=".7" fill="none"/><path d="M16,13 C18,8 19,4 19,1" stroke="rgba(15,61,41,.35)" stroke-width=".7" fill="none"/><line x1="4" y1="18" x2="8" y2="18" stroke="#c98a2b" stroke-width="1.1" stroke-linecap="round"/><circle cx="4" cy="18" r="1.4" fill="#c98a2b"/><line x1="4" y1="27" x2="8" y2="27" stroke="#c98a2b" stroke-width="1.1" stroke-linecap="round"/><circle cx="4" cy="27" r="1.4" fill="#c98a2b"/></svg></span>
           <span class="logo-name">Kington<span>Education</span></span>
         </a>
         <p style="color:#9bbaa6;max-width:30ch;font-size:.95rem;">Home of the most effective EdTech solutions. Based in Kington, UK.</p>
