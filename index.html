@@ -2043,7 +2043,7 @@ section { position: relative; }
       track.style.transform = 'translateX(-' + (cur * slideWidth()) + 'px)';
       dots.forEach(function(d, i){ d.classList.toggle('active', i === cur); });
       clearInterval(timer);
-      timer = setInterval(function(){ goTo(cur + 1); }, 5500);
+      timer = setInterval(function(){ goTo(cur + 1); }, 10000);
     }
 
     window.addEventListener('resize', function(){
@@ -2056,7 +2056,7 @@ section { position: relative; }
     wrap.querySelector('.carousel-next').addEventListener('click', function(){ goTo(cur + 1); });
     dots.forEach(function(d, i){ d.addEventListener('click', function(){ goTo(i); }); });
     el.addEventListener('mouseenter', function(){ clearInterval(timer); });
-    el.addEventListener('mouseleave', function(){ timer = setInterval(function(){ goTo(cur + 1); }, 5500); });
+    el.addEventListener('mouseleave', function(){ timer = setInterval(function(){ goTo(cur + 1); }, 10000); });
 
     var tx = 0;
     track.addEventListener('touchstart', function(e){ tx = e.touches[0].clientX; }, {passive:true});
