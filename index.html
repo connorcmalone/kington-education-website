@@ -686,17 +686,18 @@ section { position: relative; }
 
 /* ---- bar-compare ---- */
 .bar-compare { margin-bottom:28px; display:flex; flex-direction:column; gap:16px; }
-.bar-compare-row { display:grid; grid-template-columns:160px 1fr; align-items:center; gap:14px; }
-@media(max-width:480px){ .bar-compare-row { grid-template-columns:90px 1fr; } }
+.bar-compare-row { display:grid; grid-template-columns:160px 1fr auto; align-items:center; gap:14px; }
+@media(max-width:480px){ .bar-compare-row { grid-template-columns:80px 1fr auto; gap:8px; } }
 .bar-compare-label { font-size:.72rem; font-weight:600; color:rgba(255,255,255,.5); }
-.bar-compare-track { display:flex; align-items:center; gap:12px; }
-.bar-compare-fill { height:8px; border-radius:4px; width:0; transition:width 1.4s cubic-bezier(.4,0,.2,1); flex-shrink:0; }
+.bar-compare-fill { height:8px; border-radius:4px; width:0; transition:width 2.2s cubic-bezier(.4,0,.2,1); }
 .bar-compare-fill--muted { background:rgba(255,255,255,.25); }
 .bar-compare-fill--amber { background:linear-gradient(90deg,var(--green-400),#f59e0b); }
 .bar-compare-fill.go { width:calc(var(--bar-w) * 1%); }
-.bar-compare-val { font-size:.78rem; font-weight:700; color:rgba(255,255,255,.55); white-space:nowrap; opacity:0; transition:opacity .3s .9s; }
+.bar-compare-val { font-size:.78rem; font-weight:700; color:rgba(255,255,255,.55); white-space:nowrap; opacity:0; transition:opacity .3s 2s; }
 .bar-compare-fill.go + .bar-compare-val { opacity:1; }
 .bar-compare-val--amber { color:#f59e0b; }
+.bar-compare-fill.resetting { transition:none !important; }
+.bar-compare-val.resetting { transition:none !important; opacity:0 !important; }
 @media(prefers-reduced-motion:reduce){ .bar-compare-fill,.bar-compare-val { transition:none; } }
 
 /* ---- carousel ---- */
@@ -928,20 +929,15 @@ section { position: relative; }
         <div class="bar-compare" aria-hidden="true">
           <div class="bar-compare-row">
             <span class="bar-compare-label">One school year</span>
-            <div class="bar-compare-track">
-              <div class="bar-compare-fill bar-compare-fill--muted" style="--bar-w:66.7"></div>
-              <span class="bar-compare-val">12 months</span>
-            </div>
+            <div class="bar-compare-fill bar-compare-fill--muted" style="--bar-w:66.7"></div>
+            <span class="bar-compare-val">12 months</span>
           </div>
           <div class="bar-compare-row">
             <span class="bar-compare-label">Average Maths Age gain</span>
-            <div class="bar-compare-track">
-              <div class="bar-compare-fill bar-compare-fill--amber" style="--bar-w:100"></div>
-              <span class="bar-compare-val bar-compare-val--amber">+18 months</span>
-            </div>
+            <div class="bar-compare-fill bar-compare-fill--amber" style="--bar-w:100"></div>
+            <span class="bar-compare-val bar-compare-val--amber">+18 months</span>
           </div>
         </div>
-        <span class="locktag">🔒 Verbatim · independently verified</span>
         <p>Research by Whizz Education, conducted with over 12,000 students and verified by independent experts, found that students using Maths-Whizz for 45–60 minutes a week increased their Maths Age by an average of</p>
         <div style="margin:18px 0 14px;line-height:1;">
           <span style="font-family:var(--display);font-weight:900;font-size:clamp(3.2rem,6vw,5rem);color:#fff;letter-spacing:-.02em;">+18 months</span>
@@ -1876,18 +1872,26 @@ section { position: relative; }
   }, { threshold: 0.5 });
 
   /* ---- progress bar ---- */
+  function playBars(container) {
+    var fills = container.querySelectorAll('.bar-compare-fill');
+    var vals  = container.querySelectorAll('.bar-compare-val');
+    fills.forEach(function(f){ f.classList.add('resetting'); f.classList.remove('go'); });
+    vals.forEach(function(v){ v.classList.add('resetting'); });
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){
+      fills.forEach(function(f){ f.classList.remove('resetting'); f.classList.add('go'); });
+      vals.forEach(function(v){ v.classList.remove('resetting'); });
+    }); });
+  }
   var barIo = new IntersectionObserver(function(entries){
     entries.forEach(function(e){
-      if(e.isIntersecting){
-        e.target.querySelectorAll('.bar-compare-fill').forEach(function(f){ f.classList.add('go'); });
-        barIo.unobserve(e.target);
-      }
+      if(e.isIntersecting){ playBars(e.target); barIo.unobserve(e.target); }
     });
   },{threshold:0.5});
   document.querySelectorAll('.bar-compare').forEach(function(el){
-    if(!reduce) barIo.observe(el);
-    else el.querySelectorAll('.bar-compare-fill').forEach(function(f){ f.classList.add('go'); });
+    if(!reduce) barIo.observe(el); else playBars(el);
   });
+  var researchBox = document.querySelector('.research');
+  if(researchBox) researchBox.addEventListener('mouseenter', function(){ playBars(this); });
 
   /* ---- scroll progress ---- */
   var progressEl = document.getElementById('scrollProgress');
