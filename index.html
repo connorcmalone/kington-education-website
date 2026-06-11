@@ -684,6 +684,16 @@ section { position: relative; }
   to   { opacity: 1; transform: none; }
 }
 
+/* ---- progress-vis ---- */
+.progress-vis { margin-bottom:28px; }
+.progress-vis-track { position:relative; height:6px; background:rgba(255,255,255,.15); border-radius:3px; margin-bottom:10px; overflow:visible; }
+.progress-vis-fill { height:100%; width:0; background:linear-gradient(90deg,var(--green-400),#f59e0b); border-radius:3px; position:relative; transition:width 1.6s cubic-bezier(.4,0,.2,1); }
+.progress-vis-fill.go { width:100%; }
+.progress-vis-dot { position:absolute; top:50%; right:0; width:14px; height:14px; background:#f59e0b; border-radius:50%; transform:translate(50%,-50%); box-shadow:0 0 0 4px rgba(245,158,11,.25); }
+.progress-vis-labels { display:flex; justify-content:space-between; font-size:.7rem; color:rgba(255,255,255,.45); }
+.progress-vis-end { color:#f59e0b !important; font-weight:700; }
+@media(prefers-reduced-motion:reduce){ .progress-vis-fill { transition:none; } }
+
 /* ---- carousel ---- */
 .carousel { position:relative; overflow:hidden; outline:none; }
 .carousel-track { display:flex; transition:transform .5s cubic-bezier(.4,0,.2,1); will-change:transform; }
@@ -920,6 +930,19 @@ section { position: relative; }
         <p class="reveal d3 lede" style="margin-top:14px;max-width:42ch;">The platform we've partnered to deliver and support across the UK.</p>
       </div>
       <div class="research reveal d2">
+        <div class="progress-vis" aria-hidden="true">
+          <div class="progress-vis-track">
+            <div class="progress-vis-fill">
+              <div class="progress-vis-dot"></div>
+            </div>
+          </div>
+          <div class="progress-vis-labels">
+            <span>0</span>
+            <span>+6m</span>
+            <span>+12m</span>
+            <span class="progress-vis-end">+18m</span>
+          </div>
+        </div>
         <span class="locktag">🔒 Verbatim · independently verified</span>
         <p>Research by Whizz Education, conducted with over 12,000 students and verified by independent experts, found that students using Maths-Whizz for 45–60 minutes a week increased their Maths Age by an average of</p>
         <div style="margin:18px 0 14px;line-height:1;">
@@ -1854,6 +1877,14 @@ section { position: relative; }
       if (e.isIntersecting) { animateCount(e.target); countIo.unobserve(e.target); }
     });
   }, { threshold: 0.5 });
+
+  /* ---- progress bar ---- */
+  var barIo = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('go'); barIo.unobserve(e.target); }
+    });
+  },{threshold:0.5});
+  document.querySelectorAll('.progress-vis-fill').forEach(function(el){ if(!reduce) barIo.observe(el); else el.classList.add('go'); });
 
   /* ---- scroll progress ---- */
   var progressEl = document.getElementById('scrollProgress');
