@@ -684,6 +684,20 @@ section { position: relative; }
   to   { opacity: 1; transform: none; }
 }
 
+/* ---- carousel ---- */
+.carousel { position:relative; overflow:hidden; outline:none; }
+.carousel-track { display:flex; transition:transform .5s cubic-bezier(.4,0,.2,1); will-change:transform; }
+.carousel-slide { flex:none; width:100%; display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; padding:0 4px; }
+@media(max-width:880px){ .carousel-slide { grid-template-columns:1fr; } }
+.carousel-slide img { width:100%; border-radius:var(--r-lg); box-shadow:var(--sh-lg); display:block; }
+.carousel-nav { display:flex; align-items:center; justify-content:center; gap:18px; margin-top:40px; }
+.carousel-dots { display:flex; gap:8px; }
+.carousel-dots button { width:10px; height:10px; border-radius:50%; background:var(--green-200); border:none; cursor:pointer; padding:0; transition:background .2s,transform .2s; }
+.carousel-dots button.active { background:var(--green-700); transform:scale(1.3); }
+.carousel-arrow { width:40px; height:40px; border-radius:50%; background:var(--green-50); border:1px solid var(--green-200); color:var(--green-700); font-size:1.1rem; cursor:pointer; display:grid; place-items:center; transition:background .2s,border-color .2s; flex-shrink:0; }
+.carousel-arrow:hover { background:var(--green-100); border-color:var(--green-400); }
+.carousel-step { font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--green-600); margin-bottom:12px; }
+
 </style>
 </head>
 <body>
@@ -1226,21 +1240,83 @@ section { position: relative; }
 
 <section class="section" style="background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
   <div class="wrap">
-    <div class="grid g-2">
-      <div class="card hover reveal" style="padding:0;overflow:hidden;">
-        <div class="ph video" data-video="Why students love Maths-Whizz" data-video-src="https://www.youtube-nocookie.com/embed/AcoGZBm0gcg?rel=0&autoplay=1" data-label="" style="aspect-ratio:16/9;border-radius:0;background:url(https://img.youtube.com/vi/AcoGZBm0gcg/maxresdefault.jpg) center/cover no-repeat;border:none;"><span class="play-tri"></span></div>
-        <div style="padding:28px;">
-          <h3>Why students love it</h3>
-          <p class="muted" style="margin-top:8px;">Gamification keeps pupils motivated with gems, avatars and levelling up, while the Tutor quietly fills gaps.</p>
+    <p class="eyebrow center reveal" style="justify-content:center;margin-bottom:16px;">How it works</p>
+    <h2 class="reveal d1" style="text-align:center;max-width:30ch;margin:0 auto 48px;">A virtual teaching assistant for every child in your school</h2>
+    <div class="carousel" id="services-carousel" tabindex="0">
+      <div class="carousel-track">
+
+        <!-- Slide 1 -->
+        <div class="carousel-slide">
+          <div>
+            <p class="carousel-step">The challenge</p>
+            <h3 class="reveal d1" style="font-size:clamp(1.25rem,2.5vw,1.75rem);line-height:1.25;">Every child in your class is at a different level</h3>
+            <p class="reveal d2" style="margin-top:18px;color:var(--muted);">Research shows there's typically a four-year learning gap in a single classroom. Every pupil has a different maths age, different gaps, different strengths — and one teacher can only pitch lessons at one level at once.</p>
+          </div>
+          <div class="reveal d1">
+            <img src="carousel-image-1.png" alt="Students in a classroom each with different maths levels shown above their heads">
+          </div>
         </div>
-      </div>
-      <div class="card hover reveal d1" style="padding:0;overflow:hidden;">
-        <div class="ph video" data-video="Why teachers love Maths-Whizz" data-video-src="https://www.youtube-nocookie.com/embed/G3QIoezpPsg?rel=0&autoplay=1" data-label="" style="aspect-ratio:16/9;border-radius:0;background:url(https://img.youtube.com/vi/G3QIoezpPsg/maxresdefault.jpg) center/cover no-repeat;border:none;"><span class="play-tri"></span></div>
-        <div style="padding:28px;">
-          <h3>Why teachers love it</h3>
-          <p class="muted" style="margin-top:8px;">Mapped to 98% of the UK curriculum with clear, real-time progress insights for teachers and parents.</p>
+
+        <!-- Slide 2 -->
+        <div class="carousel-slide">
+          <div>
+            <p class="carousel-step">Step 1</p>
+            <h3 class="reveal d1" style="font-size:clamp(1.25rem,2.5vw,1.75rem);line-height:1.25;">Maths-Whizz assesses every child on day one</h3>
+            <p class="reveal d2" style="margin-top:18px;color:var(--muted);">Each pupil starts with a short adaptive assessment. Maths-Whizz identifies their exact maths age and pinpoints the topics where they need support — automatically, for your whole class at once.</p>
+          </div>
+          <div class="reveal d1">
+            <img src="carousel-image-2.png" alt="Maths-Whizz adaptive assessment screen showing a pupil being assessed">
+          </div>
         </div>
+
+        <!-- Slide 3 -->
+        <div class="carousel-slide">
+          <div>
+            <p class="carousel-step">Step 2</p>
+            <h3 class="reveal d1" style="font-size:clamp(1.25rem,2.5vw,1.75rem);line-height:1.25;">You see every pupil's gaps, topic by topic</h3>
+            <p class="reveal d2" style="margin-top:18px;color:var(--muted);">A detailed breakdown across Place Value, Fractions, Decimals, Measures and more — for every child in your class. You can see at a glance who needs support, in which topics, and by how much.</p>
+          </div>
+          <div class="reveal d1">
+            <img src="carousel-image-3.png" alt="Maths-Whizz topic progress chart showing each pupil's gaps across maths topics">
+          </div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="carousel-slide">
+          <div>
+            <p class="carousel-step">Step 3</p>
+            <h3 class="reveal d1" style="font-size:clamp(1.25rem,2.5vw,1.75rem);line-height:1.25;">Each child is taught at their exact level</h3>
+            <p class="reveal d2" style="margin-top:18px;color:var(--muted);">Maths-Whizz delivers animated, interactive lessons matched to each pupil's specific gaps — not the class average. One child works on fractions while another tackles place value, all at the same time.</p>
+          </div>
+          <div class="reveal d1">
+            <img src="carousel-image-4.png" alt="Maths-Whizz interactive fractions lesson showing equivalent fractions with pizza visuals">
+          </div>
+        </div>
+
+        <!-- Slide 5 -->
+        <div class="carousel-slide">
+          <div>
+            <p class="carousel-step">Step 4</p>
+            <h3 class="reveal d1" style="font-size:clamp(1.25rem,2.5vw,1.75rem);line-height:1.25;">Watch the gaps close, session by session</h3>
+            <p class="reveal d2" style="margin-top:18px;color:var(--muted);">Grey shows where each pupil started. Blue shows the gaps Maths-Whizz has since closed. As each child works through their personalised lessons, those gaps fill in — keeping every pupil moving forward across every area of maths, automatically, with no marking.</p>
+          </div>
+          <div class="reveal d1">
+            <img src="carousel-image-5.png" alt="Maths-Whizz progress chart showing grey starting points and blue progress closing each pupil's gaps">
+          </div>
+        </div>
+
+      </div><!-- /carousel-track -->
+    </div><!-- /carousel -->
+    <div class="carousel-nav">
+      <button class="carousel-arrow carousel-prev" aria-label="Previous slide">&#8592;</button>
+      <div class="carousel-dots">
+        <button class="active" aria-label="Slide 1"></button>
+        <button aria-label="Slide 2"></button>
+        <button aria-label="Slide 3"></button>
+        <button aria-label="Slide 4"></button>
+        <button aria-label="Slide 5"></button>
       </div>
+      <button class="carousel-arrow carousel-next" aria-label="Next slide">&#8594;</button>
     </div>
   </div>
 </section>
@@ -1982,6 +2058,44 @@ section { position: relative; }
 
   /* ---- year ---- */
   document.querySelectorAll('[data-year]').forEach(function (y) { y.textContent = new Date().getFullYear(); });
+
+  /* ---- carousel ---- */
+  (function(){
+    var el = document.getElementById('services-carousel');
+    if (!el) return;
+    var track = el.querySelector('.carousel-track');
+    var dots  = el.querySelectorAll('.carousel-dots button');
+    var total = dots.length;
+    var cur   = 0;
+    var timer;
+
+    function goTo(n) {
+      cur = (n + total) % total;
+      track.style.transform = 'translateX(-' + (cur * 100) + '%)';
+      dots.forEach(function(d, i){ d.classList.toggle('active', i === cur); });
+      clearInterval(timer);
+      timer = setInterval(function(){ goTo(cur + 1); }, 5500);
+    }
+
+    el.querySelector('.carousel-prev').addEventListener('click', function(){ goTo(cur - 1); });
+    el.querySelector('.carousel-next').addEventListener('click', function(){ goTo(cur + 1); });
+    dots.forEach(function(d, i){ d.addEventListener('click', function(){ goTo(i); }); });
+    el.addEventListener('mouseenter', function(){ clearInterval(timer); });
+    el.addEventListener('mouseleave', function(){ timer = setInterval(function(){ goTo(cur + 1); }, 5500); });
+
+    var tx = 0;
+    track.addEventListener('touchstart', function(e){ tx = e.touches[0].clientX; }, {passive:true});
+    track.addEventListener('touchend', function(e){
+      var dx = e.changedTouches[0].clientX - tx;
+      if (Math.abs(dx) > 50) goTo(cur + (dx < 0 ? 1 : -1));
+    });
+    el.addEventListener('keydown', function(e){
+      if (e.key === 'ArrowLeft')  goTo(cur - 1);
+      if (e.key === 'ArrowRight') goTo(cur + 1);
+    });
+
+    goTo(0);
+  })();
 
   /* ---- initial route ---- */
   var hash = (location.hash || '').replace(/^#/, '');
