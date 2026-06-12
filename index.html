@@ -133,6 +133,115 @@ body.bg-active .page-bg-on .form-card h3,
 body.bg-active .page-bg-on .form-card label,
 body.bg-active .page-bg-on .form-card strong { font-weight: 700 !important; }
 body.bg-active .page-bg-on .form-card .muted { color: var(--muted) !important; }
+/* Partner cards (Partners page) — light cards with dark text over video */
+.partner-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+@media (max-width: 800px) { .partner-grid { grid-template-columns: 1fr; } }
+.partner-card {
+  display: flex; flex-direction: column; gap: 24px;
+  background: var(--green-900);
+  border: 1px solid var(--green-800);
+  border-radius: var(--r-lg);
+  padding: clamp(28px, 3.5vw, 40px);
+  box-shadow: var(--sh-lg);
+  min-height: 100%;
+  color: #fff;
+}
+.partner-logo-wrap {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 22px 28px;
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 92px; align-self: flex-start;
+}
+.partner-logo { max-height: 56px; max-width: 220px; object-fit: contain; display: block; mix-blend-mode: multiply; }
+.partner-plus { font-family: var(--display); font-weight: 800; font-size: 2.4rem; color: var(--green-700); line-height: 1; }
+.partner-body { display: flex; flex-direction: column; gap: 12px; }
+.partner-eyebrow {
+  font-family: var(--display); font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  font-size: .78rem; color: var(--green-700);
+}
+.partner-eyebrow { color: var(--green-200); }
+.partner-title { color: #fff; margin: 0; font-size: 1.45rem; line-height: 1.25; }
+.partner-text  { color: rgba(255,255,255,.82); line-height: 1.6; margin: 0; }
+.partner-plus  { color: var(--green-200); }
+.partner-cta   { align-self: flex-start; margin-top: 8px; }
+
+/* Keep partner-card text white on video pages */
+body.bg-active .page-bg-on .partner-card,
+body.bg-active .page-bg-on .partner-card * { color: #fff !important; font-weight: 400 !important; }
+body.bg-active .page-bg-on .partner-card .partner-eyebrow { color: var(--green-200) !important; font-weight: 700 !important; }
+body.bg-active .page-bg-on .partner-card .partner-title   { color: #fff !important; font-weight: 700 !important; }
+body.bg-active .page-bg-on .partner-card .partner-text    { color: rgba(255,255,255,.82) !important; }
+body.bg-active .page-bg-on .partner-card .partner-plus    { color: var(--green-200) !important; font-weight: 800 !important; }
+/* Card icons on video pages — outlined instead of pale-green blob */
+body.bg-active .page-bg-on .card .ico {
+  background: rgba(255,255,255,.08) !important;
+  color: var(--green-200) !important;
+  border: 1px solid rgba(255,255,255,.18);
+}
+/* Stat pill — solid dark green chip readable over video backgrounds */
+.stat-pill {
+  margin-top: 14px;
+  display: inline-block;
+  padding: 10px 16px;
+  font-size: .85rem; font-weight: 700;
+  background: var(--green-900); color: #fff;
+  border: 1px solid var(--green-800);
+  border-radius: 999px;
+  box-shadow: var(--sh);
+}
+body.bg-active .page-bg-on .stat-pill,
+body.bg-active .page-bg-on .stat-pill * { color: #fff !important; font-weight: 700 !important; }
+
+/* Testimonial cards — three dark green cards readable over the video */
+.testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+@media (max-width: 960px) { .testimonial-grid { grid-template-columns: 1fr; } }
+.testimonial-card {
+  position: relative;
+  display: flex; flex-direction: column; gap: 22px;
+  background: var(--green-900);
+  border: 1px solid var(--green-800);
+  border-radius: var(--r-lg);
+  padding: 36px 30px 30px;
+  box-shadow: var(--sh-lg);
+  color: #fff;
+  margin: 0;
+}
+.testimonial-mark {
+  position: absolute; top: 8px; left: 24px;
+  font-family: var(--display); font-weight: 800;
+  font-size: 4.2rem; line-height: 1;
+  color: var(--green-300); opacity: .35;
+  pointer-events: none;
+}
+.testimonial-quote {
+  margin: 0; padding: 0;
+  font-size: 1rem; line-height: 1.6;
+  color: rgba(255,255,255,.92);
+  position: relative; z-index: 1;
+}
+.testimonial-who { display: flex; align-items: center; gap: 14px; margin: 0; padding-top: 18px; border-top: 1px solid var(--green-800); }
+.testimonial-av {
+  width: 44px; height: 44px; flex-shrink: 0;
+  border-radius: 999px;
+  background: var(--green-700);
+  color: #fff;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--display); font-weight: 700; font-size: .9rem; letter-spacing: .04em;
+}
+.testimonial-meta { display: flex; flex-direction: column; gap: 2px; line-height: 1.25; }
+.testimonial-name { color: #fff; font-family: var(--display); font-weight: 700; font-size: .98rem; }
+.testimonial-role { color: var(--green-200); font-size: .82rem; }
+
+body.bg-active .page-bg-on .testimonial-card,
+body.bg-active .page-bg-on .testimonial-card * { color: #fff !important; font-weight: 400 !important; }
+body.bg-active .page-bg-on .testimonial-card .testimonial-mark { color: var(--green-300) !important; }
+body.bg-active .page-bg-on .testimonial-card .testimonial-quote { color: rgba(255,255,255,.92) !important; }
+body.bg-active .page-bg-on .testimonial-card .testimonial-name  { color: #fff !important; font-weight: 700 !important; }
+body.bg-active .page-bg-on .testimonial-card .testimonial-role  { color: var(--green-200) !important; }
+body.bg-active .page-bg-on .testimonial-card .testimonial-av    { color: #fff !important; font-weight: 700 !important; }
 /* Transparent CTA band on the partners page so the video shows through */
 body.bg-active #page-partners .cta-band { background: transparent !important; box-shadow: none !important; border: none !important; }
 body.bg-active #page-partners .cta-band,
@@ -1085,22 +1194,40 @@ body.bg-active .page-bg-on strong { color: #fff; }
       <p class="eyebrow center reveal" style="justify-content:center;">What schools say</p>
       <h2 class="reveal d1" style="margin-top:14px;">Trusted by maths leads &amp; headteachers</h2>
     </div>
-    <div class="grid g-3">
-      <div class="quote reveal">
-        <span class="mark">"</span>
-        <blockquote>Whizz Education has become a true learning partner for us at Crofty MAT. Their focused approach helps us identify gaps, scaffold teaching, and accelerate progress — especially for disadvantaged and high-attaining pupils.</blockquote>
-        <div class="who"><span class="av">KR</span><span><b>Kim Rogers</b><span>Director of Maths, Crofty MAT</span></span></div>
-      </div>
-      <div class="quote reveal d1">
-        <span class="mark">"</span>
-        <blockquote>In just 60 minutes per week, pupils can make 18 months' progress – and we've genuinely seen this over six years. Maths-Whizz runs itself, so there's no pressure on teachers to mark work.</blockquote>
-        <div class="who"><span class="av">MJ</span><span><b>Mandy Jones</b><span>Executive Head, Criftins CofE Primary, Shropshire</span></span></div>
-      </div>
-      <div class="quote reveal d2">
-        <span class="mark">"</span>
-        <blockquote>Maths-Whizz has been a success from the start — we trialled it with Year 6, then rolled it out to all 245 pupils. The dashboard makes it easy to see who has spent time but not made progress.</blockquote>
-        <div class="who"><span class="av">LT</span><span><b>Lisa Tipping</b><span>William Gilbert Endowed CofE Primary &amp; Nursery</span></span></div>
-      </div>
+    <div class="testimonial-grid">
+      <figure class="testimonial-card reveal">
+        <span class="testimonial-mark" aria-hidden="true">&ldquo;</span>
+        <blockquote class="testimonial-quote">Whizz Education has become a true learning partner for us at Crofty MAT. Their focused approach helps us identify gaps, scaffold teaching, and accelerate progress — especially for disadvantaged and high-attaining pupils.</blockquote>
+        <figcaption class="testimonial-who">
+          <span class="testimonial-av">KR</span>
+          <span class="testimonial-meta">
+            <span class="testimonial-name">Kim Rogers</span>
+            <span class="testimonial-role">Director of Maths, Crofty MAT</span>
+          </span>
+        </figcaption>
+      </figure>
+      <figure class="testimonial-card reveal d1">
+        <span class="testimonial-mark" aria-hidden="true">&ldquo;</span>
+        <blockquote class="testimonial-quote">In just 60 minutes per week, pupils can make 18 months' progress — and we've genuinely seen this over six years. Maths-Whizz runs itself, so there's no pressure on teachers to mark work.</blockquote>
+        <figcaption class="testimonial-who">
+          <span class="testimonial-av">MJ</span>
+          <span class="testimonial-meta">
+            <span class="testimonial-name">Mandy Jones</span>
+            <span class="testimonial-role">Executive Head, Criftins CofE Primary, Shropshire</span>
+          </span>
+        </figcaption>
+      </figure>
+      <figure class="testimonial-card reveal d2">
+        <span class="testimonial-mark" aria-hidden="true">&ldquo;</span>
+        <blockquote class="testimonial-quote">Maths-Whizz has been a success from the start — we trialled it with Year 6, then rolled it out to all 245 pupils. The dashboard makes it easy to see who has spent time but not made progress.</blockquote>
+        <figcaption class="testimonial-who">
+          <span class="testimonial-av">LT</span>
+          <span class="testimonial-meta">
+            <span class="testimonial-name">Lisa Tipping</span>
+            <span class="testimonial-role">William Gilbert Endowed CofE Primary &amp; Nursery</span>
+          </span>
+        </figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -1307,7 +1434,7 @@ body.bg-active .page-bg-on strong { color: #fff; }
         <p class="eyebrow reveal" style="margin-bottom:16px;">Teachers' Resource</p>
         <h2 class="reveal d1" style="margin-top:14px;">An all-in-one library</h2>
         <p class="reveal d2 lede" style="margin-top:18px;">A rich library of interactive animated lessons, structured classroom activities, printable worksheets, enrichment tasks, and consolidation materials, all organised by topic and year group to save time and ensure consistency.</p>
-        <p class="reveal d2" style="margin-top:14px;font-size:.82rem;font-weight:700;color:var(--green-800);background:var(--green-100);padding:8px 14px;border-radius:var(--r-sm);display:inline-block;">1,200+ activities and worksheets covering the National Curriculum</p>
+        <p class="reveal d2 stat-pill">1,200+ activities and worksheets covering the National Curriculum</p>
         <div class="grid" style="gap:14px;margin-top:20px;">
           <div class="reveal d2" style="display:flex;gap:12px;align-items:flex-start;">
             <div style="width:26px;height:26px;border-radius:50%;background:var(--green-100);color:var(--green-700);display:grid;place-items:center;font-size:.85rem;font-weight:700;flex:none;">✓</div>
@@ -1572,25 +1699,32 @@ body.bg-active .page-bg-on strong { color: #fff; }
       <p class="eyebrow center reveal" style="justify-content:center;">Our distribution partners</p>
       <h2 class="reveal d1" style="margin-top:14px;">In good company</h2>
     </div>
-    <div class="paths reveal d1">
+    <div class="partner-grid reveal d1">
 
-      <!-- Current partner -->
-      <div class="research" style="display:flex;flex-direction:column;gap:22px;">
-        <div style="background:#fff;border-radius:var(--r);padding:18px 28px;display:inline-flex;align-items:center;">
-          <img src="maths-whizz-logo.jpeg" alt="Maths-Whizz by Whizz Education" style="max-height:56px;max-width:220px;object-fit:contain;display:block;mix-blend-mode:multiply;">
+      <!-- Current partner: Maths-Whizz -->
+      <article class="partner-card">
+        <div class="partner-logo-wrap">
+          <img src="maths-whizz-logo.jpeg" alt="Maths-Whizz by Whizz Education" class="partner-logo">
         </div>
-        <p style="color:var(--green-200);font-size:1.05rem;line-height:1.55;">Kington Education is the official UK distribution partner for Maths-Whizz, bringing Whizz Education's award-winning AI maths tutor to primary and secondary schools across the UK.</p>
-      </div>
+        <div class="partner-body">
+          <p class="partner-eyebrow">Current partner</p>
+          <h3 class="partner-title">Maths-Whizz by Whizz Education</h3>
+          <p class="partner-text">Kington Education is the official UK distribution partner for Maths-Whizz, bringing Whizz Education's award-winning AI maths tutor to primary and secondary schools across the UK.</p>
+        </div>
+      </article>
 
       <!-- Open to more -->
-      <div class="path alt" style="display:flex;flex-direction:column;gap:18px;justify-content:space-between;">
-        <div>
-          <div class="num" style="font-size:1.6rem;margin-bottom:18px;">+</div>
-          <h3>Open to new partnerships</h3>
-          <p class="muted" style="margin-top:12px;line-height:1.6;">We're always looking for the next great EdTech product to bring to UK schools. If you have a solution that could make a real difference to teachers and pupils, we'd love to hear from you.</p>
+      <article class="partner-card">
+        <div class="partner-logo-wrap" aria-hidden="true">
+          <span class="partner-plus">+</span>
         </div>
-        <a href="mailto:contact@kingtoneducation.com" class="btn btn-primary" style="align-self:flex-start;">Email us <span class="arr">→</span></a>
-      </div>
+        <div class="partner-body">
+          <p class="partner-eyebrow">For EdTech innovators</p>
+          <h3 class="partner-title">Open to new partnerships</h3>
+          <p class="partner-text">We're always looking for the next great EdTech product to bring to UK schools. If you have a solution that could make a real difference to teachers and pupils, we'd love to hear from you.</p>
+          <a href="mailto:contact@kingtoneducation.com" class="btn btn-primary partner-cta">Email us <span class="arr">→</span></a>
+        </div>
+      </article>
 
     </div>
   </div>
