@@ -116,10 +116,27 @@ body.bg-active .page-bg-on .lede { color: rgba(255,255,255,.85); }
 body.bg-active .page-bg-on .eyebrow { color: var(--green-300); }
 body.bg-active .page-bg-on .muted  { color: rgba(255,255,255,.6); }
 body.bg-active .page-bg-on .step-num.ghost { border-color: rgba(255,255,255,.25); color: rgba(255,255,255,.5); }
-/* All text white + bold on video-backed pages */
+/* All text white + bold on video-backed pages — but leave light-background
+   regions (forms, buttons, cta-bands) alone so their dark text stays readable */
 body.bg-active .page-bg-on,
-body.bg-active .page-bg-on * { color: #fff !important; font-weight: 700 !important; }
+body.bg-active .page-bg-on *:not(.form-card):not(.form-card *):not(.btn):not(.btn *):not(.cta-band):not(.cta-band *) {
+  color: #fff !important;
+  font-weight: 700 !important;
+}
 body.bg-active .page-bg-on a:not(.btn):hover { color: var(--green-200) !important; }
+/* Force dark, normal-weight text inside the form card so it stays readable on its white background */
+body.bg-active .page-bg-on .form-card,
+body.bg-active .page-bg-on .form-card * { color: var(--ink) !important; font-weight: 400 !important; }
+body.bg-active .page-bg-on .form-card h1,
+body.bg-active .page-bg-on .form-card h2,
+body.bg-active .page-bg-on .form-card h3,
+body.bg-active .page-bg-on .form-card label,
+body.bg-active .page-bg-on .form-card strong { font-weight: 700 !important; }
+body.bg-active .page-bg-on .form-card .muted { color: var(--muted) !important; }
+/* Transparent CTA band on the partners page so the video shows through */
+body.bg-active #page-partners .cta-band { background: transparent !important; box-shadow: none !important; border: none !important; }
+body.bg-active #page-partners .cta-band,
+body.bg-active #page-partners .cta-band *:not(.btn):not(.btn *) { color: #fff !important; font-weight: 700 !important; }
 body.bg-active .page-bg-on .btn-secondary { background: rgba(255,255,255,.1); color: #fff; border-color: rgba(255,255,255,.25); }
 body.bg-active .page-bg-on .btn-secondary:hover { background: rgba(255,255,255,.18); }
 body.bg-active .page-bg-on .btn-light { background: rgba(255,255,255,.95); color: var(--green-800); }
@@ -2225,23 +2242,20 @@ body.bg-active .page-bg-on strong { color: #fff; }
   var videos = Array.from(document.querySelectorAll('.bg-video'));
   if (!videos.length) return;
 
-  /* Default checkpoint distribution across video duration (fractions 0–1).
-     Engine spreads them evenly across however many sections the page has. */
-  function buildCheckpoints(n) {
-    var arr = [];
-    for (var i = 0; i <= n; i++) arr.push(i / n);
-    return arr;
-  }
+  /* video → page map */
+  var pairs = videos.map(function(v){
+    return { vid: v, page: document.getElementById(v.getAttribute('data-page')) };
+  }).filter(function(p){ return p.page; });
 
-  var activePage = null;  // the currently-active page element
-  var activeVid  = null;  // the currently-active video element
+  var activePair = null;
   var raf = null;
   var target = 0;
   var current = 0;
+  var pendingLoadHandler = null;
 
   function getSections() {
-    if (!activePage) return [];
-    return Array.from(activePage.querySelectorAll('section'));
+    if (!activePair) return [];
+    return Array.from(activePair.page.querySelectorAll('section'));
   }
 
   function getScrollFraction() {
@@ -2250,90 +2264,95 @@ body.bg-active .page-bg-on strong { color: #fff; }
     var first = sections[0].getBoundingClientRect().top + window.scrollY;
     var last  = sections[sections.length - 1];
     var total = (last.getBoundingClientRect().top + window.scrollY + last.offsetHeight) - first;
+    if (total <= 0) return 0;
     var scrolled = window.scrollY - first;
     return Math.max(0, Math.min(1, scrolled / total));
   }
 
-  function snapToCheckpoint(f) {
-    var sections = getSections();
-    var cps = buildCheckpoints(sections.length);
-    var n = cps.length - 1;
-    for (var i = 0; i < n; i++) {
-      var a = i / n, b = (i + 1) / n;
-      if (f >= a && f <= b) {
-        var local = (f - a) / (b - a);
-        return cps[i] + local * (cps[i + 1] - cps[i]);
-      }
-    }
-    return cps[n];
-  }
-
   function setVideoTime(fraction) {
-    if (!activeVid || !activeVid.duration || isNaN(activeVid.duration)) return;
-    var t = fraction * activeVid.duration;
-    /* Always nudge — tiny per-frame updates decode smoother than big jumps */
-    activeVid.currentTime = t;
+    var vid = activePair && activePair.vid;
+    if (!vid || !vid.duration || isNaN(vid.duration)) return;
+    var safeMax = Math.max(0, vid.duration - 0.05);
+    var t = Math.max(0, Math.min(safeMax, fraction * vid.duration));
+    try { vid.currentTime = t; } catch(e){}
   }
 
   function onScroll() {
-    if (!activePage) return;
-    target = snapToCheckpoint(getScrollFraction());
+    if (!activePair) return;
+    target = getScrollFraction();
     if (!raf) raf = requestAnimationFrame(tick);
   }
 
   function tick() {
     raf = null;
     var delta = target - current;
-    /* Gentler easing — slower catch-up but no perceived stutter */
-    current += delta * 0.06;
-    /* Clamp tiny remainder to avoid endless raf */
+    current += delta * 0.08;
     if (Math.abs(delta) < 0.0005) current = target;
     setVideoTime(current);
     if (current !== target) raf = requestAnimationFrame(tick);
   }
 
-  function activate(pageEl, vidEl) {
-    /* tear down previous */
-    if (activeVid) activeVid.classList.remove('active');
-    if (activePage) activePage.classList.remove('page-bg-on');
+  function activate(pair) {
+    if (activePair === pair) return;
+    deactivate();
 
-    activePage = pageEl;
-    activeVid  = vidEl;
-    activeVid.classList.add('active');
-    activePage.classList.add('page-bg-on');
+    activePair = pair;
+    pair.vid.classList.add('active');
+    pair.page.classList.add('page-bg-on');
     document.body.classList.add('bg-active');
 
-    current = getScrollFraction();
-    target  = current;
-    setVideoTime(current);
+    function applyInitial() {
+      try { pair.vid.pause(); } catch(e){}
+      current = getScrollFraction();
+      target  = current;
+      setVideoTime(current);
+    }
+
+    if (pair.vid.readyState >= 2) {
+      applyInitial();
+    } else {
+      pendingLoadHandler = function(){ applyInitial(); };
+      pair.vid.addEventListener('loadeddata', pendingLoadHandler, { once: true });
+      try { pair.vid.load(); } catch(e){}
+    }
+
     window.addEventListener('scroll', onScroll, { passive: true });
   }
 
   function deactivate() {
-    if (activeVid)  activeVid.classList.remove('active');
-    if (activePage) activePage.classList.remove('page-bg-on');
-    activePage = null;
-    activeVid  = null;
+    if (!activePair) return;
+    if (pendingLoadHandler) {
+      activePair.vid.removeEventListener('loadeddata', pendingLoadHandler);
+      pendingLoadHandler = null;
+    }
+    activePair.vid.classList.remove('active');
+    activePair.page.classList.remove('page-bg-on');
     document.body.classList.remove('bg-active');
     window.removeEventListener('scroll', onScroll);
     cancelAnimationFrame(raf);
+    raf = null;
+    activePair = null;
+    current = 0;
+    target = 0;
   }
 
-  /* Observe each candidate page; activate when its hidden attr is removed */
-  videos.forEach(function(vid){
-    var pageId = vid.getAttribute('data-page');
-    var page = document.getElementById(pageId);
-    if (!page) return;
+  /* Poll for which page is currently visible.
+     Simple + robust — no MutationObserver fragility. */
+  function detectVisible() {
+    for (var i = 0; i < pairs.length; i++) {
+      if (!pairs[i].page.hasAttribute('hidden')) return pairs[i];
+    }
+    return null;
+  }
 
-    var obs = new MutationObserver(function() {
-      var isHidden = page.hasAttribute('hidden');
-      if (!isHidden && activePage !== page) activate(page, vid);
-      if (isHidden && activePage === page) deactivate();
-    });
-    obs.observe(page, { attributes: true, attributeFilter: ['hidden'] });
+  function syncToVisible() {
+    var visible = detectVisible();
+    if (visible && visible !== activePair) activate(visible);
+    else if (!visible && activePair) deactivate();
+  }
 
-    if (!page.hasAttribute('hidden')) activate(page, vid);
-  });
+  syncToVisible();
+  setInterval(syncToVisible, 150);
 })();
 </script>
 </body>
