@@ -87,6 +87,46 @@ section { position: relative; }
 .section-tight { padding: clamp(48px, 6vw, 80px) 0; position: relative; }
 
 /* ============================================================
+   SCROLL-SCRUBBED BACKGROUND VIDEOS (per page)
+   ============================================================ */
+.bg-video {
+  position: fixed; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; z-index: -2;
+  pointer-events: none;
+  opacity: 0; transition: opacity .6s ease;
+}
+#bg-overlay {
+  position: fixed; inset: 0; z-index: -1;
+  background: rgba(0,0,0,.55);
+  pointer-events: none;
+  opacity: 0; transition: opacity .6s ease;
+}
+body.bg-active #bg-overlay { opacity: 1; }
+body.bg-active .bg-video.active { opacity: 1; }
+
+/* Transparent treatment for any page that has bg-active class applied */
+body.bg-active .page-bg-on section { background: transparent !important; border-color: rgba(255,255,255,.08) !important; }
+body.bg-active .page-bg-on .card  { background: rgba(0,0,0,.45) !important; border: 1px solid rgba(255,255,255,.15); backdrop-filter: blur(8px); }
+body.bg-active .page-bg-on { color: #fff; }
+body.bg-active .page-bg-on h1,
+body.bg-active .page-bg-on h2,
+body.bg-active .page-bg-on h3 { color: #fff; }
+body.bg-active .page-bg-on p,
+body.bg-active .page-bg-on .lede { color: rgba(255,255,255,.85); }
+body.bg-active .page-bg-on .eyebrow { color: var(--green-300); }
+body.bg-active .page-bg-on .muted  { color: rgba(255,255,255,.6); }
+body.bg-active .page-bg-on .step-num.ghost { border-color: rgba(255,255,255,.25); color: rgba(255,255,255,.5); }
+/* All text white + bold on video-backed pages */
+body.bg-active .page-bg-on,
+body.bg-active .page-bg-on * { color: #fff !important; font-weight: 700 !important; }
+body.bg-active .page-bg-on a:not(.btn):hover { color: var(--green-200) !important; }
+body.bg-active .page-bg-on .btn-secondary { background: rgba(255,255,255,.1); color: #fff; border-color: rgba(255,255,255,.25); }
+body.bg-active .page-bg-on .btn-secondary:hover { background: rgba(255,255,255,.18); }
+body.bg-active .page-bg-on .btn-light { background: rgba(255,255,255,.95); color: var(--green-800); }
+body.bg-active .page-bg-on .step-num { background: rgba(255,255,255,.12) !important; }
+body.bg-active .page-bg-on strong { color: #fff; }
+
+/* ============================================================
    SCROLL PROGRESS
    ============================================================ */
 .scroll-progress {
@@ -1344,9 +1384,6 @@ section { position: relative; }
           <a href="partners.html" class="btn btn-secondary">Partner with us</a>
         </div>
       </div>
-      <div class="reveal d2">
-        <div class="ph" data-label="hero: British Isles / classroom" style="aspect-ratio:4/4;box-shadow:var(--sh-lg);"></div>
-      </div>
     </div>
   </div>
 </section>
@@ -1470,7 +1507,7 @@ section { position: relative; }
         <h1 class="reveal d1">Reach schools across the&nbsp;UK</h1>
         <p class="lede reveal d2" style="margin-top:24px;max-width:48ch;">Kington Education offers commission-based sales representation for technology companies wanting to reach schools across the UK.</p>
         <div class="reveal d3" style="margin-top:30px;">
-          <a href="contact.html#book" class="btn btn-primary">Book a call <span class="arr">→</span></a>
+          <a href="mailto:contact@kingtoneducation.com" class="btn btn-primary">Get in touch <span class="arr">→</span></a>
         </div>
       </div>
       <div class="reveal d2">
@@ -1535,7 +1572,7 @@ section { position: relative; }
           <h3>Open to new partnerships</h3>
           <p class="muted" style="margin-top:12px;line-height:1.6;">We're always looking for the next great EdTech product to bring to UK schools. If you have a solution that could make a real difference to teachers and pupils, we'd love to hear from you.</p>
         </div>
-        <a href="contact.html#book" class="btn btn-primary" style="align-self:flex-start;">Book a conversation <span class="arr">→</span></a>
+        <a href="mailto:contact@kingtoneducation.com" class="btn btn-primary" style="align-self:flex-start;">Email us <span class="arr">→</span></a>
       </div>
 
     </div>
@@ -1550,7 +1587,7 @@ section { position: relative; }
       <h2 style="max-width:20ch;margin:10px auto 0;">Join us in shaping the future of education technology</h2>
       <p style="max-width:46ch;margin:16px auto 0;">Innovative partnerships that put great products in front of the schools that need them.</p>
       <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:30px;position:relative;">
-        <a href="contact.html#book" class="btn btn-secondary">Book a call <span class="arr">→</span></a>
+        <a href="mailto:contact@kingtoneducation.com" class="btn btn-secondary">Email contact@kingtoneducation.com <span class="arr">→</span></a>
       </div>
     </div>
   </div>
@@ -2171,6 +2208,128 @@ section { position: relative; }
     });
     sec.insertBefore(wrap,sec.firstChild);
     n++;
+  });
+})();
+</script>
+
+<!-- Scroll-scrubbed background videos (one per page that uses one) -->
+<video class="bg-video" data-page="page-home"     src="home-bg.mp4"     muted playsinline preload="auto" tabindex="-1" aria-hidden="true"></video>
+<video class="bg-video" data-page="page-services" src="services-bg.mp4" muted playsinline preload="auto" tabindex="-1" aria-hidden="true"></video>
+<video class="bg-video" data-page="page-about"    src="about-bg.mp4"    muted playsinline preload="auto" tabindex="-1" aria-hidden="true"></video>
+<video class="bg-video" data-page="page-partners" src="partners-bg.mp4" muted playsinline preload="auto" tabindex="-1" aria-hidden="true"></video>
+<div id="bg-overlay" aria-hidden="true"></div>
+
+<script>
+/* ── Multi-page scroll-scrubbed background video engine ───────────── */
+(function(){
+  var videos = Array.from(document.querySelectorAll('.bg-video'));
+  if (!videos.length) return;
+
+  /* Default checkpoint distribution across video duration (fractions 0–1).
+     Engine spreads them evenly across however many sections the page has. */
+  function buildCheckpoints(n) {
+    var arr = [];
+    for (var i = 0; i <= n; i++) arr.push(i / n);
+    return arr;
+  }
+
+  var activePage = null;  // the currently-active page element
+  var activeVid  = null;  // the currently-active video element
+  var raf = null;
+  var target = 0;
+  var current = 0;
+
+  function getSections() {
+    if (!activePage) return [];
+    return Array.from(activePage.querySelectorAll('section'));
+  }
+
+  function getScrollFraction() {
+    var sections = getSections();
+    if (!sections.length) return 0;
+    var first = sections[0].getBoundingClientRect().top + window.scrollY;
+    var last  = sections[sections.length - 1];
+    var total = (last.getBoundingClientRect().top + window.scrollY + last.offsetHeight) - first;
+    var scrolled = window.scrollY - first;
+    return Math.max(0, Math.min(1, scrolled / total));
+  }
+
+  function snapToCheckpoint(f) {
+    var sections = getSections();
+    var cps = buildCheckpoints(sections.length);
+    var n = cps.length - 1;
+    for (var i = 0; i < n; i++) {
+      var a = i / n, b = (i + 1) / n;
+      if (f >= a && f <= b) {
+        var local = (f - a) / (b - a);
+        return cps[i] + local * (cps[i + 1] - cps[i]);
+      }
+    }
+    return cps[n];
+  }
+
+  function setVideoTime(fraction) {
+    if (!activeVid || !activeVid.duration || isNaN(activeVid.duration)) return;
+    var t = fraction * activeVid.duration;
+    if (Math.abs(activeVid.currentTime - t) > 0.05) activeVid.currentTime = t;
+  }
+
+  function onScroll() {
+    if (!activePage) return;
+    target = snapToCheckpoint(getScrollFraction());
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(tick);
+  }
+
+  function tick() {
+    current += (target - current) * 0.12;
+    setVideoTime(current);
+    if (Math.abs(target - current) > 0.001) {
+      raf = requestAnimationFrame(tick);
+    }
+  }
+
+  function activate(pageEl, vidEl) {
+    /* tear down previous */
+    if (activeVid) activeVid.classList.remove('active');
+    if (activePage) activePage.classList.remove('page-bg-on');
+
+    activePage = pageEl;
+    activeVid  = vidEl;
+    activeVid.classList.add('active');
+    activePage.classList.add('page-bg-on');
+    document.body.classList.add('bg-active');
+
+    current = getScrollFraction();
+    target  = current;
+    setVideoTime(current);
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
+  function deactivate() {
+    if (activeVid)  activeVid.classList.remove('active');
+    if (activePage) activePage.classList.remove('page-bg-on');
+    activePage = null;
+    activeVid  = null;
+    document.body.classList.remove('bg-active');
+    window.removeEventListener('scroll', onScroll);
+    cancelAnimationFrame(raf);
+  }
+
+  /* Observe each candidate page; activate when its hidden attr is removed */
+  videos.forEach(function(vid){
+    var pageId = vid.getAttribute('data-page');
+    var page = document.getElementById(pageId);
+    if (!page) return;
+
+    var obs = new MutationObserver(function() {
+      var isHidden = page.hasAttribute('hidden');
+      if (!isHidden && activePage !== page) activate(page, vid);
+      if (isHidden && activePage === page) deactivate();
+    });
+    obs.observe(page, { attributes: true, attributeFilter: ['hidden'] });
+
+    if (!page.hasAttribute('hidden')) activate(page, vid);
   });
 })();
 </script>
