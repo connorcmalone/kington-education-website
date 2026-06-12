@@ -229,6 +229,18 @@ body.bg-active .page-bg-on .how-it-works-frame {
 }
 body.bg-active .page-bg-on .how-it-works-eyebrow { color: #fff !important; }
 
+/* Tick circles inside the outlined frames — solid amber so they pop on video */
+body.bg-active .page-bg-on .how-it-works-frame div[style*="border-radius:50%"] {
+  background: var(--amber, #d49a3a) !important;
+  color: #fff !important;
+  box-shadow: 0 0 0 2px rgba(255,255,255,.15);
+}
+/* Tick row paragraph text — explicit white, brighter than ink-soft */
+body.bg-active .page-bg-on .how-it-works-frame div[style*="border-radius:50%"] + p {
+  color: #fff !important;
+  font-weight: 600 !important;
+}
+
 /* Solid carousel arrow buttons readable over video */
 body.bg-active .page-bg-on .carousel-arrow {
   background: var(--green-700) !important;
