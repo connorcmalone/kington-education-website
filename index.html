@@ -2271,22 +2271,25 @@ body.bg-active .page-bg-on strong { color: #fff; }
   function setVideoTime(fraction) {
     if (!activeVid || !activeVid.duration || isNaN(activeVid.duration)) return;
     var t = fraction * activeVid.duration;
-    if (Math.abs(activeVid.currentTime - t) > 0.05) activeVid.currentTime = t;
+    /* Always nudge — tiny per-frame updates decode smoother than big jumps */
+    activeVid.currentTime = t;
   }
 
   function onScroll() {
     if (!activePage) return;
     target = snapToCheckpoint(getScrollFraction());
-    cancelAnimationFrame(raf);
-    raf = requestAnimationFrame(tick);
+    if (!raf) raf = requestAnimationFrame(tick);
   }
 
   function tick() {
-    current += (target - current) * 0.12;
+    raf = null;
+    var delta = target - current;
+    /* Gentler easing — slower catch-up but no perceived stutter */
+    current += delta * 0.06;
+    /* Clamp tiny remainder to avoid endless raf */
+    if (Math.abs(delta) < 0.0005) current = target;
     setVideoTime(current);
-    if (Math.abs(target - current) > 0.001) {
-      raf = requestAnimationFrame(tick);
-    }
+    if (current !== target) raf = requestAnimationFrame(tick);
   }
 
   function activate(pageEl, vidEl) {
