@@ -48,6 +48,12 @@
   --sh:    0 4px 12px rgba(16,61,41,.06), 0 14px 34px rgba(16,61,41,.07);
   --sh-lg: 0 10px 30px rgba(16,61,41,.10), 0 30px 70px rgba(16,61,41,.12);
   --sh-form: 0 20px 60px rgba(16,61,41,.13), 0 6px 20px rgba(16,61,41,.08);
+  /* Unified card spec — used by .card (scan items) and .partner-card / .testimonial-card (stop-and-read) */
+  --card-pad-scan: clamp(24px, 2.8vw, 32px);
+  --card-pad-read: clamp(28px, 3.5vw, 40px);
+  --card-radius:   var(--r-lg);
+  --card-shadow-scan: var(--sh-sm);
+  --card-shadow-read: var(--sh-lg);
 
   --maxw: 1200px;
   --nav-h: 76px;
@@ -140,9 +146,9 @@ body.bg-active .page-bg-on .form-card .muted { color: var(--muted) !important; }
   display: flex; flex-direction: column; gap: 24px;
   background: var(--green-900);
   border: 1px solid var(--green-800);
-  border-radius: var(--r-lg);
-  padding: clamp(28px, 3.5vw, 40px);
-  box-shadow: var(--sh-lg);
+  border-radius: var(--card-radius);
+  padding: var(--card-pad-read);
+  box-shadow: var(--card-shadow-read);
   min-height: 100%;
   color: #fff;
 }
@@ -229,6 +235,12 @@ body.bg-active .page-bg-on .how-it-works-frame {
 }
 body.bg-active .page-bg-on .how-it-works-eyebrow { color: #fff !important; }
 
+/* The leaf engine injects decorative SVG leaves into every section.
+   Video-backed pages already have autumn atmosphere from the video itself,
+   so the synthetic leaves create visual noise (e.g. the green glow over
+   the partners K logo). Hide them on those pages. */
+body.bg-active .page-bg-on [data-kl] { display: none !important; }
+
 /* Tick circles inside the outlined frames — solid amber so they pop on video */
 body.bg-active .page-bg-on .how-it-works-frame div[style*="border-radius:50%"] {
   background: var(--amber, #d49a3a) !important;
@@ -276,9 +288,9 @@ body.bg-active .page-bg-on .stat-pill * { color: #fff !important; font-weight: 7
   display: flex; flex-direction: column; gap: 22px;
   background: var(--green-900);
   border: 1px solid var(--green-800);
-  border-radius: var(--r-lg);
-  padding: 36px 30px 30px;
-  box-shadow: var(--sh-lg);
+  border-radius: var(--card-radius);
+  padding: var(--card-pad-read);
+  box-shadow: var(--card-shadow-read);
   color: #fff;
   margin: 0;
 }
@@ -564,7 +576,7 @@ body.bg-active .page-bg-on strong { color: #fff; }
    ============================================================ */
 .card {
   background: var(--surface); border: 1px solid var(--line);
-  border-radius: var(--r-lg); padding: 30px; box-shadow: var(--sh-sm);
+  border-radius: var(--card-radius); padding: var(--card-pad-scan); box-shadow: var(--card-shadow-scan);
   transition: transform .25s ease, box-shadow .25s ease, border-color .25s;
 }
 .card.hover:hover { transform: translateY(-4px); box-shadow: var(--sh); border-color: var(--green-200); }
@@ -2469,11 +2481,19 @@ body.bg-active .page-bg-on strong { color: #fff; }
     return Math.max(0, Math.min(1, scrolled / total));
   }
 
+  /* Smoothstep — lingers on the opening + closing frames so each scene has
+     a moment to land, pushes through the middle. */
+  function pace(f) {
+    f = Math.max(0, Math.min(1, f));
+    return f * f * (3 - 2 * f);
+  }
+
   function setVideoTime(fraction) {
     var vid = activePair && activePair.vid;
     if (!vid || !vid.duration || isNaN(vid.duration)) return;
+    var paced = pace(fraction);
     var safeMax = Math.max(0, vid.duration - 0.05);
-    var t = Math.max(0, Math.min(safeMax, fraction * vid.duration));
+    var t = Math.max(0, Math.min(safeMax, paced * vid.duration));
     try { vid.currentTime = t; } catch(e){}
   }
 
