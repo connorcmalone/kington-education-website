@@ -301,47 +301,6 @@ body.welcoming { overflow: hidden; }
   .tilt-card { transform: none !important; transition: none !important; }
 }
 
-/* ============================================================
-   MAGNETIC CURSOR — soft honey dot + ring follower with target pull
-   ============================================================ */
-.mcursor-dot, .mcursor-ring {
-  position: fixed; top: 0; left: 0;
-  pointer-events: none; z-index: 9999;
-  border-radius: 50%;
-  opacity: 0;
-  transition: opacity .35s ease, background .25s ease, border-color .25s ease;
-  will-change: transform;
-}
-.mcursor-dot {
-  width: 8px; height: 8px;
-  background: var(--amber);
-  box-shadow: 0 0 12px rgba(201,138,43,.45);
-}
-.mcursor-ring {
-  width: 38px; height: 38px;
-  border: 1.5px solid rgba(201,138,43,.55);
-  background: rgba(201,138,43,.04);
-}
-body.mcursor-on { cursor: none; }
-body.mcursor-on .mcursor-dot,
-body.mcursor-on .mcursor-ring { opacity: 1; }
-body.mcursor-on a,
-body.mcursor-on button,
-body.mcursor-on [data-magnet],
-body.mcursor-on .card,
-body.mcursor-on .partner-card,
-body.mcursor-on .testimonial-card { cursor: none; }
-body.mcursor-active .mcursor-ring {
-  border-color: rgba(201,138,43,.85);
-  background: rgba(201,138,43,.12);
-}
-/* Magnet targets get a smooth translate spring back when leaving */
-a, button, [data-magnet] { transition: translate .35s cubic-bezier(.2,.7,.3,1); }
-@media (pointer: coarse), (prefers-reduced-motion: reduce) {
-  .mcursor-dot, .mcursor-ring { display: none !important; }
-  body.mcursor-on { cursor: auto; }
-  a, button, [data-magnet] { transition: none; }
-}
 
 /* Tick circles inside the outlined frames — solid amber so they pop on video */
 body.bg-active .page-bg-on .how-it-works-frame div[style*="border-radius:50%"] {
@@ -2813,72 +2772,6 @@ body.bg-active .bg-video.active {
   setInterval(attachTilts, 1000);
 })();
 
-/* ── Magnetic cursor + custom states ───────────────────────────────── */
-(function(){
-  if (matchMedia('(pointer: coarse)').matches) return;
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  var dot  = document.createElement('div');
-  var ring = document.createElement('div');
-  dot.className  = 'mcursor-dot';  dot.setAttribute('aria-hidden','true');
-  ring.className = 'mcursor-ring'; ring.setAttribute('aria-hidden','true');
-  document.body.appendChild(dot);
-  document.body.appendChild(ring);
-
-  var MAGNET_SEL = 'a, button, [data-magnet]';
-  var HOVER_SEL  = 'a, button, [data-magnet], .card, .partner-card, .testimonial-card';
-
-  var tx = innerWidth/2, ty = innerHeight/2;
-  var rx = tx, ry = ty;
-  var lastTarget = null;
-
-  document.addEventListener('pointermove', function(e){
-    tx = e.clientX; ty = e.clientY;
-    document.body.classList.add('mcursor-on');
-
-    var hoverEl  = e.target.closest && e.target.closest(HOVER_SEL);
-    var magnetEl = e.target.closest && e.target.closest(MAGNET_SEL);
-
-    if (hoverEl) document.body.classList.add('mcursor-active');
-    else document.body.classList.remove('mcursor-active');
-
-    /* Release previous magnet target if we left it */
-    if (lastTarget && lastTarget !== magnetEl) {
-      lastTarget.style.translate = '';
-      lastTarget = null;
-    }
-
-    /* Apply pull to the current magnet target */
-    if (magnetEl) {
-      var r = magnetEl.getBoundingClientRect();
-      var cx = r.left + r.width / 2;
-      var cy = r.top  + r.height / 2;
-      var dx = (e.clientX - cx) * 0.22;
-      var dy = (e.clientY - cy) * 0.22;
-      var cap = Math.min(r.width, r.height) * 0.18;
-      if (dx > cap)  dx = cap;  else if (dx < -cap) dx = -cap;
-      if (dy > cap)  dy = cap;  else if (dy < -cap) dy = -cap;
-      magnetEl.style.translate = dx + 'px ' + dy + 'px';
-      lastTarget = magnetEl;
-    }
-  }, { passive: true });
-
-  document.addEventListener('pointerleave', function(){
-    document.body.classList.remove('mcursor-on');
-    document.body.classList.remove('mcursor-active');
-    if (lastTarget) { lastTarget.style.translate = ''; lastTarget = null; }
-  }, { passive: true });
-
-  function tick() {
-    rx += (tx - rx) * 0.22;
-    ry += (ty - ry) * 0.22;
-    var rs = document.body.classList.contains('mcursor-active') ? 1.55 : 1;
-    dot.style.transform  = 'translate3d(' + (tx - 4)  + 'px,' + (ty - 4)  + 'px,0)';
-    ring.style.transform = 'translate3d(' + (rx - 19) + 'px,' + (ry - 19) + 'px,0) scale(' + rs + ')';
-    requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
-})();
 </script>
 </body>
 </html>
