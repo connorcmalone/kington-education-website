@@ -242,51 +242,41 @@ body.bg-active .page-bg-on .how-it-works-eyebrow { color: #fff !important; }
 body.bg-active .page-bg-on [data-kl] { display: none !important; }
 
 /* ============================================================
-   FIRST-VISIT WELCOME — a short overlay on the very first arrival
+   FIRST-VISIT CINEMATIC EMERGENCE
+   No overlay — the page itself arrives with deliberate choreography:
+   the video pulls focus from soft-blur + dim, then nav drops in, then
+   hero reveals cascade. Subsequent visits skip the emergence entirely.
    ============================================================ */
-.welcome-overlay {
-  position: fixed; inset: 0; z-index: 200;
-  display: flex; align-items: flex-end; justify-content: center;
-  padding-bottom: 14vh;
+body.first-arrival { overflow: hidden; }
+body.first-arrival .bg-video.active {
+  animation: first-emergence 1.9s cubic-bezier(.35,.15,.2,1) both !important;
+}
+@keyframes first-emergence {
+  0%   { filter: blur(8px) brightness(.45); opacity: 0; transform: scale(1.04); }
+  55%  { filter: blur(2px) brightness(.85); opacity: 1; transform: scale(1.015); }
+  100% { filter: blur(0)   brightness(1);   opacity: 1; transform: scale(1); }
+}
+body.first-arrival .nav,
+body.first-arrival .demo-bar {
+  opacity: 0; transform: translateY(-14px);
   pointer-events: none;
-  background: rgba(8, 32, 22, .96);
-  animation: welcome-show 5.6s cubic-bezier(.4,.2,.2,1) forwards;
+  transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.3,1);
 }
-.welcome-text {
-  text-align: center;
-  color: #fff;
-  font-family: var(--display);
-  opacity: 0;
-  transform: translateY(10px);
-  animation: welcome-text 4.8s ease 0.4s forwards;
-  max-width: 30ch;
-  padding: 0 18px;
+/* Hold all reveals invisible during the emergence so they don't
+   compete with the video pulling focus. Released when the body
+   class is removed — existing .d1/.d2/.d3 delays then cascade. */
+body.first-arrival .page .reveal {
+  opacity: 0 !important;
+  transform: translateY(22px) scale(.985) rotate(.35deg) !important;
+  filter: blur(3px) !important;
 }
-.welcome-text strong {
-  display: block;
-  font-size: clamp(1.6rem, 3.4vw, 2.4rem);
-  font-weight: 800; letter-spacing: -.015em;
-  margin-bottom: .5em;
-  text-shadow: 0 2px 24px rgba(0,0,0,.45);
-}
-.welcome-text span {
-  display: block;
-  font-size: .98rem; font-weight: 400; font-style: italic;
-  color: rgba(255,255,255,.82);
-}
-body.welcoming .nav, body.welcoming .demo-bar { opacity: 0; pointer-events: none; transition: opacity .8s ease; }
-body.welcoming { overflow: hidden; }
-@keyframes welcome-show {
-  0%   { opacity: 1; background-color: rgba(8,32,22,.96); }
-  14%  { opacity: 1; background-color: rgba(8,32,22,.55); }
-  68%  { opacity: 1; background-color: rgba(8,32,22,.38); }
-  100% { opacity: 0; background-color: rgba(8,32,22,0); }
-}
-@keyframes welcome-text {
-  0%   { opacity: 0; transform: translateY(10px); filter: blur(4px); }
-  18%  { opacity: 1; transform: translateY(0);    filter: blur(0); }
-  72%  { opacity: 1; transform: translateY(0);    filter: blur(0); }
-  100% { opacity: 0; transform: translateY(-6px); filter: blur(2px); }
+@media (prefers-reduced-motion: reduce) {
+  body.first-arrival,
+  body.first-arrival .bg-video.active,
+  body.first-arrival .nav,
+  body.first-arrival .demo-bar,
+  body.first-arrival .page .reveal { animation: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
+  body.first-arrival { overflow: auto; }
 }
 
 /* ============================================================
@@ -2699,7 +2689,10 @@ body.bg-active .bg-video.active {
   setInterval(syncToVisible, 150);
 })();
 
-/* ── First-visit welcome ──────────────────────────────────────────── */
+/* ── First-visit cinematic emergence ─────────────────────────────────
+   Gates the page behind body.first-arrival on the very first visit.
+   The video pulls focus and brightness over ~1.9s while nav and reveals
+   are held back; after 1.7s the gate releases and the UI cascades in. */
 (function(){
   try {
     var params = new URLSearchParams(location.search);
@@ -2709,21 +2702,13 @@ body.bg-active .bg-video.active {
     localStorage.setItem('kington_visited', '1');
   } catch (e) { return; }
 
-  var el = document.createElement('div');
-  el.className = 'welcome-overlay';
-  el.setAttribute('aria-hidden', 'true');
-  el.innerHTML =
-    '<div class="welcome-text">' +
-      '<strong>Welcome to Kington Education</strong>' +
-      '<span>Take a moment to look around.</span>' +
-    '</div>';
-  document.body.appendChild(el);
-  document.body.classList.add('welcoming');
-
+  document.body.classList.add('first-arrival');
+  /* Release the gate after the video emergence has mostly resolved.
+     Nav and demo-bar fade in via their own transition, hero reveals
+     cascade via their existing .d1/.d2/.d3 delays. */
   setTimeout(function(){
-    document.body.classList.remove('welcoming');
-    el.remove();
-  }, 5700);
+    document.body.classList.remove('first-arrival');
+  }, 1700);
 })();
 
 /* ── 3D tilt cards ─────────────────────────────────────────────────── */
