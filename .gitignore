@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# Local dev tooling (Claude Code launch config + range-supporting Python server)
+.claude/
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
