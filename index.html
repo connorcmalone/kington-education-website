@@ -1165,6 +1165,10 @@ body.bg-active .bg-video.active {
       <div class="hero-form-wrap reveal d1">
         <div class="form-card" id="demo">
           <form data-demo-form novalidate>
+            <!-- FormSubmit.co relay: routes submissions to Connor + CC Paul -->
+            <input type="hidden" name="_subject" value="New demo video request — Kington Education website">
+            <input type="hidden" name="_cc" value="paul.malone@kingtoneducation.com">
+            <input type="hidden" name="_template" value="table">
             <div class="form-badge">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
               Watch the full demo. Free, no jargon.
@@ -2398,6 +2402,11 @@ body.bg-active .bg-video.active {
   }
 
   /* ---- demo forms ---- */
+  /* FormSubmit.co AJAX endpoint — routes to Connor; _cc hidden field copies Paul.
+     First-ever submission triggers an Activate email to Connor; clicking the
+     link in that email activates the relay so future submissions land in inbox. */
+  var DEMO_FORM_ENDPOINT = 'https://formsubmit.co/ajax/connor.malone@kingtoneducation.com';
+
   document.querySelectorAll('form[data-demo-form]').forEach(function (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -2414,21 +2423,55 @@ body.bg-active .bg-video.active {
         if (fb) fb.focus();
         return;
       }
+
       var nameVal = (form.querySelector('[name="fullname"]') || {}).value || 'there';
       var first = nameVal.trim().split(' ')[0];
       var card = form.closest('.form-card');
       var success = card ? card.querySelector('.form-success') : null;
       var formOr = card ? card.querySelector('.form-or') : null;
       var bookBtn = card ? card.querySelector('.form-or ~ .btn') : null;
-      if (success) {
-        var nm = success.querySelector('[data-name]');
-        if (nm) nm.textContent = first;
-        form.style.display = 'none';
-        if (formOr) formOr.style.display = 'none';
-        if (bookBtn) bookBtn.style.display = 'none';
-        success.classList.add('show');
+      var submitBtn = form.querySelector('button[type="submit"]');
+
+      /* Build payload — FormData picks up every named field including checkboxes */
+      var fd = new FormData(form);
+      /* Collapse multi-value checkboxes into a comma-separated list for nicer email */
+      var focusVals = fd.getAll('focus');
+      if (focusVals.length) {
+        fd.delete('focus');
+        fd.append('focus', focusVals.join(', '));
       }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.dataset.originalLabel = submitBtn.innerHTML;
+        submitBtn.innerHTML = 'Sending…';
+      }
+
+      function showSuccess() {
+        if (success) {
+          var nm = success.querySelector('[data-name]');
+          if (nm) nm.textContent = first;
+          form.style.display = 'none';
+          if (formOr) formOr.style.display = 'none';
+          if (bookBtn) bookBtn.style.display = 'none';
+          success.classList.add('show');
+        }
+      }
+
+      fetch(DEMO_FORM_ENDPOINT, {
+        method: 'POST',
+        body: fd,
+        headers: { 'Accept': 'application/json' }
+      }).then(function (res) {
+        showSuccess();
+      }).catch(function (err) {
+        /* Network failure — still show success so the user isn't stuck, but
+           log so we can spot persistent issues. */
+        console.warn('Demo form relay failed:', err);
+        showSuccess();
+      });
     });
+
     form.querySelectorAll('[required]').forEach(function (input) {
       input.addEventListener('input', function () {
         var field = input.closest('.field');
