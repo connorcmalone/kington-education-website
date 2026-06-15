@@ -201,6 +201,46 @@ body.bg-active .page-bg-on .card .ico {
   .why-features { grid-template-columns: 1fr; }
 }
 
+/* Prominent (edge-to-edge) variant — used when the how-it-works section
+   is positioned right after the hero, given its own visual weight */
+.how-it-works-section--prominent .how-it-works-wrap {
+  max-width: 1480px;
+  padding-left: clamp(20px, 4vw, 56px);
+  padding-right: clamp(20px, 4vw, 56px);
+}
+.how-it-works-section--prominent .how-it-works-frame {
+  margin-top: clamp(40px, 5vw, 64px);
+  padding: clamp(36px, 5vw, 72px) clamp(24px, 4vw, 56px);
+}
+.how-it-works-section--prominent .carousel-slide h3 {
+  font-size: clamp(1.4rem, 2.7vw, 2rem) !important;
+  line-height: 1.2 !important;
+}
+
+/* Carousel auto-advance progress bar — Instagram-stories-style countdown */
+.carousel-progress {
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: rgba(0,0,0,.05);
+  border-radius: 999px;
+  overflow: hidden;
+  z-index: 5;
+  pointer-events: none;
+}
+.carousel-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--amber);
+  border-radius: 999px;
+  transition: width .12s linear;
+  will-change: width;
+}
+.carousel-progress-fill.run { width: 100%; transition: width 15s linear; }
+.carousel-progress-fill.paused { transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  .carousel-progress { display: none; }
+}
+
 /* "How the Virtual Tutor works" — bigger eyebrow + outlined frame */
 .how-it-works-eyebrow {
   text-align: center;
@@ -1454,53 +1494,14 @@ body.bg-active .bg-video.active {
   </div>
 </section>
 
-<section class="section-tight" style="background:var(--green-900);border-top:1px solid var(--green-800);border-bottom:1px solid var(--green-800);">
-  <div class="wrap">
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;text-align:center;" class="reveal">
-      <div style="padding:32px 24px;border-right:1px solid var(--green-700);">
-        <div style="font-family:var(--display);font-weight:900;font-size:clamp(2rem,4vw,3rem);color:var(--green-300);line-height:1;">9,000+</div>
-        <p style="color:var(--green-100);font-family:var(--display);font-weight:600;margin-top:8px;font-size:.95rem;">Schools worldwide</p>
-      </div>
-      <div style="padding:32px 24px;border-right:1px solid var(--green-700);">
-        <div style="font-family:var(--display);font-weight:900;font-size:clamp(2rem,4vw,3rem);color:var(--green-300);line-height:1;">1.5m+</div>
-        <p style="color:var(--green-100);font-family:var(--display);font-weight:600;margin-top:8px;font-size:.95rem;">Students using Maths-Whizz</p>
-      </div>
-      <div style="padding:32px 24px;">
-        <div style="font-family:var(--display);font-weight:900;font-size:clamp(1.2rem,2.5vw,1.7rem);color:var(--green-300);line-height:1.2;">3× Bett Award</div>
-        <p style="color:var(--green-100);font-family:var(--display);font-weight:600;margin-top:8px;font-size:.95rem;">Winner</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section" style="border-bottom:1px solid var(--line);">
-  <div class="wrap">
-    <div class="center reveal" style="max-width:580px;margin:0 auto 48px;">
-      <p class="eyebrow center" style="justify-content:center;">What is Maths-Whizz?</p>
-      <h2 style="margin-top:14px;">Two tools, one platform</h2>
-      <p class="lede" style="margin-top:16px;">Maths-Whizz gives schools two complementary products, both included in the same platform.</p>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;" class="hero-grid">
-      <div class="card reveal" style="border:1.5px solid var(--green-200);background:var(--green-50);">
-        <p style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green-600);margin-bottom:14px;">Product 1</p>
-        <h3 style="margin-bottom:14px;">The Virtual Tutor</h3>
-        <p style="color:var(--ink-soft);">An AI-driven adaptive maths tutor that works one-to-one with each student. It assesses their level, sets a personalised learning path, adapts in real time as they progress, and builds confidence by filling gaps before moving on. Students get the equivalent of individual attention every session, without any extra work for the teacher.</p>
-      </div>
-      <div class="card reveal d1" style="border:1.5px solid var(--green-200);background:var(--green-50);">
-        <p style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green-600);margin-bottom:14px;">Product 2</p>
-        <h3 style="margin-bottom:14px;">The Teachers' Resource</h3>
-        <p style="color:var(--ink-soft);">A ready-to-use library of interactive animated lessons, printable worksheets, enrichment tasks, and classroom activities, all organised by topic and year group. Teachers can plan, deliver, and differentiate maths lessons quickly, with no need to build materials from scratch.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section how-it-works-section" style="background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
-  <div class="wrap">
+<!-- HOW-IT-WORKS-PLACEHOLDER -->
+<section class="section how-it-works-section how-it-works-section--prominent" style="background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding-top:0;">
+  <div class="wrap how-it-works-wrap">
     <div class="how-it-works-frame">
       <p class="how-it-works-eyebrow reveal">How the Virtual Tutor works</p>
       <h2 class="reveal d1" style="text-align:center;max-width:30ch;margin:0 auto 48px;">Think of it as a teaching assistant for every child in your school</h2>
     <div class="carousel" id="services-carousel" tabindex="0">
+      <div class="carousel-progress" aria-hidden="true"><div class="carousel-progress-fill"></div></div>
       <div class="carousel-track">
 
         <!-- Slide 1 -->
@@ -1607,6 +1608,48 @@ body.bg-active .bg-video.active {
     </div>
   </div>
 </section>
+
+<section class="section-tight" style="background:var(--green-900);border-top:1px solid var(--green-800);border-bottom:1px solid var(--green-800);">
+  <div class="wrap">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;text-align:center;" class="reveal">
+      <div style="padding:32px 24px;border-right:1px solid var(--green-700);">
+        <div style="font-family:var(--display);font-weight:900;font-size:clamp(2rem,4vw,3rem);color:var(--green-300);line-height:1;">9,000+</div>
+        <p style="color:var(--green-100);font-family:var(--display);font-weight:600;margin-top:8px;font-size:.95rem;">Schools worldwide</p>
+      </div>
+      <div style="padding:32px 24px;border-right:1px solid var(--green-700);">
+        <div style="font-family:var(--display);font-weight:900;font-size:clamp(2rem,4vw,3rem);color:var(--green-300);line-height:1;">1.5m+</div>
+        <p style="color:var(--green-100);font-family:var(--display);font-weight:600;margin-top:8px;font-size:.95rem;">Students using Maths-Whizz</p>
+      </div>
+      <div style="padding:32px 24px;">
+        <div style="font-family:var(--display);font-weight:900;font-size:clamp(1.2rem,2.5vw,1.7rem);color:var(--green-300);line-height:1.2;">3× Bett Award</div>
+        <p style="color:var(--green-100);font-family:var(--display);font-weight:600;margin-top:8px;font-size:.95rem;">Winner</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="border-bottom:1px solid var(--line);">
+  <div class="wrap">
+    <div class="center reveal" style="max-width:580px;margin:0 auto 48px;">
+      <p class="eyebrow center" style="justify-content:center;">What is Maths-Whizz?</p>
+      <h2 style="margin-top:14px;">Two tools, one platform</h2>
+      <p class="lede" style="margin-top:16px;">Maths-Whizz gives schools two complementary products, both included in the same platform.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;" class="hero-grid">
+      <div class="card reveal" style="border:1.5px solid var(--green-200);background:var(--green-50);">
+        <p style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green-600);margin-bottom:14px;">Product 1</p>
+        <h3 style="margin-bottom:14px;">The Virtual Tutor</h3>
+        <p style="color:var(--ink-soft);">An AI-driven adaptive maths tutor that works one-to-one with each student. It assesses their level, sets a personalised learning path, adapts in real time as they progress, and builds confidence by filling gaps before moving on. Students get the equivalent of individual attention every session, without any extra work for the teacher.</p>
+      </div>
+      <div class="card reveal d1" style="border:1.5px solid var(--green-200);background:var(--green-50);">
+        <p style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green-600);margin-bottom:14px;">Product 2</p>
+        <h3 style="margin-bottom:14px;">The Teachers' Resource</h3>
+        <p style="color:var(--ink-soft);">A ready-to-use library of interactive animated lessons, printable worksheets, enrichment tasks, and classroom activities, all organised by topic and year group. Teachers can plan, deliver, and differentiate maths lessons quickly, with no need to build materials from scratch.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 <section class="section how-it-works-section" style="background:var(--green-50);border-top:1px solid var(--green-100);border-bottom:1px solid var(--green-100);">
   <div class="wrap">
@@ -2490,6 +2533,7 @@ body.bg-active .bg-video.active {
     var wrap  = el.parentElement;
     var track = el.querySelector('.carousel-track');
     var dots  = wrap.querySelectorAll('.carousel-dots button');
+    var fill  = el.querySelector('.carousel-progress-fill');
     var total = dots.length;
     var cur   = 0;
     var timer;
@@ -2504,13 +2548,37 @@ body.bg-active .bg-video.active {
       dots.forEach(function(d, i){ d.classList.toggle('active', i === cur); });
     }
 
+    function resetProgress() {
+      if (!fill) return;
+      fill.classList.remove('run');
+      fill.classList.add('paused');
+      /* Force a reflow so the next transition starts cleanly from 0 */
+      void fill.offsetWidth;
+      fill.classList.remove('paused');
+    }
+    function runProgress() {
+      if (!fill || prefersReduced) return;
+      resetProgress();
+      /* Next frame so the .run class triggers the 15s width transition */
+      requestAnimationFrame(function(){ fill.classList.add('run'); });
+    }
+    function freezeProgress() {
+      if (!fill) return;
+      /* Capture current width and freeze it */
+      var w = getComputedStyle(fill).width;
+      fill.classList.add('paused');
+      fill.style.width = w;
+    }
+
     function startAuto() {
       if (prefersReduced) return;
       stopAuto();
-      timer = setInterval(function(){ goTo(cur + 1); }, AUTO_MS);
+      runProgress();
+      timer = setInterval(function(){ goTo(cur + 1); runProgress(); }, AUTO_MS);
     }
     function stopAuto() {
       if (timer) { clearInterval(timer); timer = null; }
+      freezeProgress();
     }
     /* Restart the countdown on any user interaction so we don't advance
        a slide they're actively reading */
