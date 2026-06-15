@@ -2493,6 +2493,8 @@ body.bg-active .bg-video.active {
     var total = dots.length;
     var cur   = 0;
     var timer;
+    var AUTO_MS = 15000;
+    var prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     function slideWidth(){ return el.offsetWidth; }
 
@@ -2502,28 +2504,51 @@ body.bg-active .bg-video.active {
       dots.forEach(function(d, i){ d.classList.toggle('active', i === cur); });
     }
 
+    function startAuto() {
+      if (prefersReduced) return;
+      stopAuto();
+      timer = setInterval(function(){ goTo(cur + 1); }, AUTO_MS);
+    }
+    function stopAuto() {
+      if (timer) { clearInterval(timer); timer = null; }
+    }
+    /* Restart the countdown on any user interaction so we don't advance
+       a slide they're actively reading */
+    function userGoTo(n) {
+      goTo(n);
+      startAuto();
+    }
+
     window.addEventListener('resize', function(){
       track.style.transition = 'none';
       track.style.transform = 'translateX(-' + (cur * slideWidth()) + 'px)';
       requestAnimationFrame(function(){ track.style.transition = ''; });
     });
 
-    wrap.querySelector('.carousel-prev').addEventListener('click', function(){ goTo(cur - 1); });
-    wrap.querySelector('.carousel-next').addEventListener('click', function(){ goTo(cur + 1); });
-    dots.forEach(function(d, i){ d.addEventListener('click', function(){ goTo(i); }); });
+    wrap.querySelector('.carousel-prev').addEventListener('click', function(){ userGoTo(cur - 1); });
+    wrap.querySelector('.carousel-next').addEventListener('click', function(){ userGoTo(cur + 1); });
+    dots.forEach(function(d, i){ d.addEventListener('click', function(){ userGoTo(i); }); });
 
     var tx = 0;
-    track.addEventListener('touchstart', function(e){ tx = e.touches[0].clientX; }, {passive:true});
+    track.addEventListener('touchstart', function(e){ tx = e.touches[0].clientX; stopAuto(); }, {passive:true});
     track.addEventListener('touchend', function(e){
       var dx = e.changedTouches[0].clientX - tx;
       if (Math.abs(dx) > 50) goTo(cur + (dx < 0 ? 1 : -1));
+      startAuto();
     });
     el.addEventListener('keydown', function(e){
-      if (e.key === 'ArrowLeft')  goTo(cur - 1);
-      if (e.key === 'ArrowRight') goTo(cur + 1);
+      if (e.key === 'ArrowLeft')  userGoTo(cur - 1);
+      if (e.key === 'ArrowRight') userGoTo(cur + 1);
+    });
+    /* Pause on hover (desktop), pause when tab hidden */
+    el.addEventListener('mouseenter', stopAuto);
+    el.addEventListener('mouseleave', startAuto);
+    document.addEventListener('visibilitychange', function(){
+      if (document.hidden) stopAuto(); else startAuto();
     });
 
     goTo(0);
+    startAuto();
   })();
 
   /* ---- initial route ---- */
