@@ -12,3 +12,7 @@
 
 # Logs
 *.log
+
+# Local-only source files (originals for assets; not deployed, not pushed)
+_sources/*
+!_sources/README.md
