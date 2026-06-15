@@ -235,7 +235,7 @@ body.bg-active .page-bg-on .card .ico {
   transition: width .12s linear;
   will-change: width;
 }
-.carousel-progress-fill.run { width: 100%; transition: width 15s linear; }
+.carousel-progress-fill.run { width: 100%; transition: width 10s linear; }
 .carousel-progress-fill.paused { transition: none; }
 @media (prefers-reduced-motion: reduce) {
   .carousel-progress { display: none; }
@@ -2537,7 +2537,7 @@ body.bg-active .bg-video.active {
     var total = dots.length;
     var cur   = 0;
     var timer;
-    var AUTO_MS = 15000;
+    var AUTO_MS = 10000;
     var prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     function slideWidth(){ return el.offsetWidth; }
